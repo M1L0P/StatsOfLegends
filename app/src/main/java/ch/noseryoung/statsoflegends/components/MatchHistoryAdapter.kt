@@ -1,5 +1,6 @@
 package ch.noseryoung.statsoflegends.components
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +9,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.noseryoung.statsoflegends.R
 import ch.noseryoung.statsoflegends.domain.MatchHistory
+import ch.noseryoung.statsoflegends.persistence.StaticManager
+import kotlin.math.roundToInt
 
-class MatchHistoryAdapter(private var data: MatchHistory) :
+class MatchHistoryAdapter(private val context: Context, private var data: MatchHistory) :
     RecyclerView.Adapter<MatchHistoryAdapter.MatchHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchHistoryAdapter.MatchHolder {
@@ -18,12 +21,25 @@ class MatchHistoryAdapter(private var data: MatchHistory) :
     }
 
     override fun onBindViewHolder(holder: MatchHolder, position: Int) {
-        holder.txtKDACalc.text = data.matches[position].kda.kda.toString()
-        val kills = data.matches[position].kda.kills
-        val deaths = data.matches[position].kda.deaths
-        val assists = data.matches[position].kda.assists
+        val match = data.matches[position]
+        val kills = match.kda.kills
+        val deaths = match.kda.deaths
+        val assists = match.kda.assists
         holder.txtKDA.text = "${kills}/${deaths}/${assists}"
-        holder.txtGameType.text = data.matches[position].gameType
+        holder.txtKDACalc.text = match.kda.kda.roundToInt().toString()
+        holder.txtGameType.text = match.gameType
+
+        // Images
+        holder.imgChamp.setImageBitmap(StaticManager.getChampionIcon(context, match.championName))
+        holder.imgItem1.setImageBitmap(StaticManager.getItemIcon(context, match.itemID[0]))
+        holder.imgItem2.setImageBitmap(StaticManager.getItemIcon(context, match.itemID[1]))
+        holder.imgItem3.setImageBitmap(StaticManager.getItemIcon(context, match.itemID[2]))
+        holder.imgItem4.setImageBitmap(StaticManager.getItemIcon(context, match.itemID[3]))
+        holder.imgItem5.setImageBitmap(StaticManager.getItemIcon(context, match.itemID[4]))
+        holder.imgItem6.setImageBitmap(StaticManager.getItemIcon(context, match.itemID[5]))
+
+        holder.imgSum1.setImageBitmap(StaticManager.getItemIcon(context, match.summonerSpellIDs.first))
+        holder.imgSum1.setImageBitmap(StaticManager.getItemIcon(context, match.summonerSpellIDs.second))
     }
 
     override fun getItemCount() = data.matches.size

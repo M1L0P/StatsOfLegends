@@ -2,15 +2,15 @@ package ch.noseryoung.statsoflegends.data
 
 val gameTypes = mapOf(
     Pair(400, "Draft Pick"),
-    Pair(420, "Ranked Solo/Duo"),
+    Pair(420, "Ranked S/D"),
     Pair(430, "Blind Pick"),
     Pair(440, "Ranked Flex"),
     Pair(450, "ARAM"),
-    Pair(460, "3v3 Twisted Treeline"),
-    Pair(470, "Ranked Twisted Treeline"),
-    Pair(830, "Co-op vs. AI Intermediate Bot games"),
-    Pair(840, "Co-op vs. AI Intro Bot games"),
-    Pair(850, "Co-op vs. AI Beginner Bot games")
+    Pair(460, "3v3 TT"),
+    Pair(470, "Ranked TT"),
+    Pair(830, "Co-op vs. AI"),
+    Pair(840, "Co-op vs. AI"),
+    Pair(850, "Co-op vs. AI")
 )
 
 val servers = mapOf(

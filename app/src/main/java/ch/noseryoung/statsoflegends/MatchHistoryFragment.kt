@@ -12,12 +12,10 @@ import ch.noseryoung.statsoflegends.net.MatchFactory
 
 class MatchHistoryFragment : Fragment() {
 
-    private var history = MatchHistory()
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_matchhistory, container, false)
 
-        root.findViewById<RecyclerView>(R.id.rcyHistory).adapter = MatchHistoryAdapter(MatchFactory.history)
+        root.findViewById<RecyclerView>(R.id.rcyHistory).adapter = MatchHistoryAdapter(context!!, MatchFactory.history)
         root.findViewById<RecyclerView>(R.id.rcyHistory).layoutManager = LinearLayoutManager(context)
 
         return root

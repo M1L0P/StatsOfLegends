@@ -12,4 +12,9 @@
     <string name="local_champmap">champion_map.json</string>
     <string name="url_spellmap">https://ddragon.leagueoflegends.com/cdn/6.24.1/data/en_US/summoner.json</string>
     <string name="local_spellmap">spells_map.json</string>
+
+    <string name="url_static">http://ddragon.leagueoflegends.com/cdn/6.24.1/img/{}.png</string>
+
+    <!--Just to remember, delete afterwards-->
+    <string name="url_icon">http://opgg-static.akamaized.net/images/profile_icons/{}.jpg</string>
 </resources>
