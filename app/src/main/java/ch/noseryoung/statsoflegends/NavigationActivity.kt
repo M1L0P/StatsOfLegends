@@ -22,11 +22,9 @@ class NavigationActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_history -> {
-                    txtTest.setText(R.string.title_history)
                     true
                 }
                 R.id.navigation_summary -> {
-                    txtTest.setText(R.string.title_summary)
                     true
                 }
                 else -> false

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+              android:layout_height="match_parent" android:orientation="vertical">
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="100dp" android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" tools:srcCompat="@tools:sample/backgrounds/scenic[1]"
+                    android:id="@+id/imgSumSIcon" app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+            <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp" android:id="@+id/txtSumSName"
+                    app:layout_constraintStart_toEndOf="@+id/imgSumSIcon" android:layout_marginStart="8dp"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                    android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent"
+                    android:textSize="24sp"/>
+            <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtSumSLvl" android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/txtSumSName" android:layout_marginBottom="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="8dp" app:layout_constraintStart_toEndOf="@+id/imgSumSIcon"
+                    android:layout_marginStart="8dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+        <androidx.cardview.widget.CardView
+                android:layout_width="193dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/cardView2" android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/cardView4" android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <TextView
+                        android:text="TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/txtSumRankedSolo"
+                        app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                        app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                        android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+                        android:textSize="18sp"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+                android:layout_width="194dp"
+                android:layout_height="0dp" app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_alignParentEnd="true"
+                app:layout_constraintStart_toEndOf="@+id/cardView2" android:layout_marginStart="8dp"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp" android:id="@+id/cardView4"
+                app:layout_constraintHorizontal_bias="0.5" android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <TextView
+                        android:text="TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/txtSumRankedFlex"
+                        app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+                        android:textSize="18sp"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="50dp" android:layout_marginLeft="8dp" android:layout_marginRight="8dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:id="@+id/viewSumAllWins"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/viewSumAllLoose"
+            />
+            <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp" android:id="@+id/viewSumAllLoose"
+                    app:layout_constraintStart_toEndOf="@+id/viewSumAllWins"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="100dp" android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp" android:layout_marginBottom="8dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" tools:srcCompat="@tools:sample/backgrounds/scenic[7]"
+                    android:id="@+id/imgSumC1" app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintStart_toEndOf="@+id/imgSumC1" android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                    android:id="@+id/constraintLayout" app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintBottom_toTopOf="@+id/constraintLayout3" android:layout_marginBottom="4dp">
+
+                <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp" android:id="@+id/viewSumC1Win"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/viewSumC1Loose"
+                        app:layout_constraintHorizontal_bias="0.5"/>
+                <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp" android:id="@+id/viewSumC1Loose"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/viewSumC1Win"
+                        app:layout_constraintHorizontal_bias="0.5"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintStart_toEndOf="@+id/imgSumC1" android:layout_marginStart="8dp"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="4dp"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout" android:id="@+id/constraintLayout3"
+                    app:layout_constraintHorizontal_bias="0.5" android:layout_marginEnd="8dp">
+
+                <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp" android:id="@+id/viewSumC1Games"
+                        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/viewSumC1notGames"
+                        app:layout_constraintHorizontal_bias="0.5"/>
+                <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp" android:id="@+id/viewSumC1notGames"
+                        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/viewSumC1Games"
+                        app:layout_constraintHorizontal_bias="0.5"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="100dp" android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+    >
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content" tools:srcCompat="@tools:sample/backgrounds/scenic[9]"
+                    android:id="@+id/imgSumC2"
+                    app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp" app:layout_constraintEnd_toStartOf="@+id/imgSumC2"
+                    android:layout_marginEnd="8dp" android:id="@+id/constraintLayout2"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintBottom_toTopOf="@+id/constraintLayout4" android:layout_marginTop="8dp"
+                    android:layout_marginBottom="4dp">
+                <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp" android:id="@+id/viewSumC2Loose"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/viewSumC2Win" app:layout_constraintHorizontal_bias="0.5"/>
+                <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp" android:id="@+id/viewSumC2Win"
+                        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/viewSumC2Loose"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                    app:layout_constraintEnd_toStartOf="@+id/imgSumC2" android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+                    android:id="@+id/constraintLayout4" app:layout_constraintHorizontal_bias="0.5">
+
+                <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp" android:id="@+id/ViewSumC2Game"
+                        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintEnd_toStartOf="@+id/viewSumC2NotGame"/>
+                <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp" android:id="@+id/viewSumC2NotGame"
+                        app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/ViewSumC2Game"
+                        app:layout_constraintHorizontal_bias="0.5"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
