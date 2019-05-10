@@ -10,9 +10,10 @@ object APIManager {
      *  1. Get Matches by account ID
      */
 
-    val champions = Resources.getSystem().getString(R.string.url_champmap)
-
+    //val champions = Resources.getSystem().getString(R.string.url_champmap)
+    /*
     private fun getChampionNameByID(id: Int) : String {
 
     }
+    */
 }

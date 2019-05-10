@@ -4,9 +4,23 @@ import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_navigation.*
+import androidx.core.view.get
+import kotlinx.android.synthetic.main.activity_main.*
+
 
 class NavigationActivity : AppCompatActivity() {
+
+    private fun loadMatchHistory() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.viewFragmentHolder, MatchHistoryFragment())
+            .commit()
+    }
+
+    private fun loadSummary() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.viewFragmentHolder, SummaryFragment())
+            .commit()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,9 +36,11 @@ class NavigationActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_history -> {
+                    loadMatchHistory()
                     true
                 }
                 R.id.navigation_summary -> {
+                    loadSummary()
                     true
                 }
                 else -> false
@@ -34,10 +50,12 @@ class NavigationActivity : AppCompatActivity() {
         // Set selected intend
         when (intent.extras.getInt("type")) {
             NavigationType.HISTORY.value -> {
-
+                loadMatchHistory()
+                nav_view.menu.get(1).setChecked(true)
             }
             NavigationType.SUMMARY.value -> {
-
+                loadSummary()
+                nav_view.menu.get(2).setChecked(true)
             }
         }
     }

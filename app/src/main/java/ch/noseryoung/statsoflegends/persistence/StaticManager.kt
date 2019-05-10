@@ -3,7 +3,7 @@ package ch.noseryoung.statsoflegends.persistence
 import android.graphics.Bitmap
 
 object StaticManager {
-
+    /*
     fun getChampion(id: Int) : Bitmap? {
 
     }
@@ -28,4 +28,5 @@ object StaticManager {
     private fun getLocal(id: Int) : Bitmap {
 
     }
+    */
 }

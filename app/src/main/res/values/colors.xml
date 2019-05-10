@@ -3,4 +3,19 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="looseColor">#f48fb1</color>
+    <color name="winColor">#9fa8da</color>
+    <color name="played">#C5CAE9</color>
+    <color name="notPlayed">#E8EAF6</color>
+
+    <color name="ironElo">#757575</color>
+    <color name="bronzeElo">#795548</color>
+    <color name="SilverElo">#e0e0e0</color>
+    <color name="GoldElo">#FFC400</color>
+    <color name="PlatElo">#00897b</color>
+    <color name="DiamondElo">#26c6da</color>
+    <color name="MasterElo">#673AB7</color>
+    <color name="GraMasterElo">#c62828</color>
+    <color name="ChallengerElo">#ec407a</color>
 </resources>
