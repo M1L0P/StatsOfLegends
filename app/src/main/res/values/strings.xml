@@ -7,4 +7,6 @@
     <string name="search_btn_summary">Summary</string>
     <string name="search_title">Search for a Summoner</string>
     <string name="search_txtinput_placeholder">Summoner name</string>
+
+    <string name="url_champmap">https://ddragon.leagueoflegends.com/cdn/6.24.1/data/en_US/champion.json</string>
 </resources>
