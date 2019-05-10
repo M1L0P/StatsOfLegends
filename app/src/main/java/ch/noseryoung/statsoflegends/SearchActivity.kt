@@ -1,12 +1,13 @@
 package ch.noseryoung.statsoflegends
 
-import android.app.PendingIntent.getActivity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ch.noseryoung.statsoflegends.data.servers
+import ch.noseryoung.statsoflegends.net.APIManager
+import ch.noseryoung.statsoflegends.net.HTTPManager.loadMapping
 import kotlinx.android.synthetic.main.activity_search.*
 
 class SearchActivity : AppCompatActivity() {
@@ -27,11 +28,19 @@ class SearchActivity : AppCompatActivity() {
         searchBtnHistory.setOnClickListener {
             if(!checkNameExists()) return@setOnClickListener
             startNavigation(NavigationType.HISTORY)
+
+            // Get champion and spell mapping
+            loadMapping(this, R.string.url_champmap, R.string.local_champmap)
+            loadMapping(this, R.string.url_spellmap, R.string.local_spellmap)
         }
 
         searchBtnSummary.setOnClickListener {
             if(!checkNameExists()) return@setOnClickListener
             startNavigation(NavigationType.SUMMARY)
+
+            // Get champion and spell mapping
+            loadMapping(this, R.string.url_champmap, R.string.local_champmap)
+            loadMapping(this, R.string.url_spellmap, R.string.local_spellmap)
         }
     }
 

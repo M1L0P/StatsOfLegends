@@ -1,5 +1,5 @@
 package ch.noseryoung.statsoflegends.domain
 
 data class MatchHistory (
-    var matches: Array<Match>
+    var matches: ArrayList<Match> = ArrayList()
 )

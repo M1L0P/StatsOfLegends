@@ -7,7 +7,10 @@ val gameTypes = mapOf(
     Pair(440, "Ranked Flex"),
     Pair(450, "ARAM"),
     Pair(460, "3v3 Twisted Treeline"),
-    Pair(470, "Ranked Twisted Treeline")
+    Pair(470, "Ranked Twisted Treeline"),
+    Pair(830, "Co-op vs. AI Intermediate Bot games"),
+    Pair(840, "Co-op vs. AI Intro Bot games"),
+    Pair(850, "Co-op vs. AI Beginner Bot games")
 )
 
 val servers = mapOf(

@@ -5,7 +5,12 @@ import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
+import androidx.recyclerview.widget.RecyclerView
+import ch.noseryoung.statsoflegends.components.MatchHistoryAdapter
+import ch.noseryoung.statsoflegends.net.APIManager
+import ch.noseryoung.statsoflegends.net.MatchFactory
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_matchhistory.*
 
 
 class NavigationActivity : AppCompatActivity() {
@@ -14,6 +19,21 @@ class NavigationActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.viewFragmentHolder, MatchHistoryFragment())
             .commit()
+
+        Thread(Runnable {
+            val accoundId = APIManager.getAccountID("sirtubelujohnson")
+            val matchIds = APIManager.getMatchIDs(accoundId)
+            for (id in matchIds) {
+                val match = APIManager.getMatch(this, "sirtubelujohnson", id)
+                if (match != null) {
+                    MatchFactory.history.matches.add(match)
+
+                    runOnUiThread {
+                        rcyHistory.adapter?.notifyDataSetChanged()
+                    }
+                }
+            }
+        }).start()
     }
 
     private fun loadSummary() {
