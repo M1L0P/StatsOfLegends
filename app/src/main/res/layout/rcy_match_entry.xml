@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+    >
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="0dp" tools:srcCompat="@tools:sample/avatars"
+                    android:id="@+id/imgChamp"
+                    app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:scaleType="center"/>
+            <TextView
+                    android:text="K/D/A"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtKDA" app:layout_constraintStart_toEndOf="@+id/imgChamp"
+                    android:layout_marginStart="8dp" android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toTopOf="parent" android:textSize="25dp"/>
+            <TextView
+                    android:text="kda"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtKDACalc"
+                    app:layout_constraintStart_toEndOf="@+id/txtKDA" android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtKDA" android:textSize="20sp"/>
+            <TextView
+                    android:text="game type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtGameType"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="8dp" android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toTopOf="parent"/>
+            <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" app:srcCompat="@drawable/ic_public_black_24dp"
+                    android:id="@+id/imgItem4" android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toEndOf="@+id/imgChamp"
+                    android:layout_marginStart="8dp"/>
+            <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" app:srcCompat="@drawable/ic_public_black_24dp"
+                    android:id="@+id/imgItem5" android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imgItem4" android:layout_marginStart="8dp"/>
+            <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" app:srcCompat="@drawable/ic_public_black_24dp"
+                    android:id="@+id/imgItem3"
+                    app:layout_constraintStart_toEndOf="@+id/imgItem2"
+                    android:layout_marginStart="8dp" app:layout_constraintBottom_toTopOf="@+id/imgItem6"
+                    android:layout_marginBottom="8dp"/>
+            <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" app:srcCompat="@drawable/ic_public_black_24dp"
+                    android:id="@+id/imgItem1"
+                    app:layout_constraintStart_toEndOf="@+id/imgChamp"
+                    android:layout_marginStart="8dp" android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/imgItem4"/>
+            <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" app:srcCompat="@drawable/ic_public_black_24dp"
+                    android:id="@+id/imgItem2"
+                    app:layout_constraintStart_toEndOf="@+id/imgItem1" android:layout_marginStart="8dp"
+                    android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/imgItem5"/>
+            <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" app:srcCompat="@drawable/ic_public_black_24dp"
+                    android:id="@+id/imgItem6"
+                    app:layout_constraintStart_toEndOf="@+id/imgItem2" android:layout_marginStart="8dp"
+                    android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
+            <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp" app:srcCompat="@drawable/ic_public_black_24dp"
+                    android:id="@+id/txtGameType"
+                    app:layout_constraintStart_toEndOf="@+id/imgItem3" android:layout_marginStart="8dp"
+                    app:layout_constraintTop_toTopOf="@+id/imgItem3"
+                    app:layout_constraintBottom_toBottomOf="@+id/imgItem3"/>
+            <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp" app:srcCompat="@drawable/ic_public_black_24dp"
+                    android:id="@+id/imgSum2"
+                    app:layout_constraintStart_toEndOf="@+id/imgItem6"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imgItem6"
+                    app:layout_constraintTop_toTopOf="@+id/imgItem6"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
