@@ -10,6 +10,8 @@ import ch.noseryoung.statsoflegends.net.APIManager
 import ch.noseryoung.statsoflegends.net.HTTPManager.loadMapping
 import kotlinx.android.synthetic.main.activity_search.*
 
+
+
 class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,13 +21,26 @@ class SearchActivity : AppCompatActivity() {
             this, android.R.layout.simple_spinner_item,
             servers.keys.toList()
         )
+
+        val mobileArray =
+            arrayOf("Bilgewaters call", "SirtubelUJohnson", "Jeff")
+
+        val adapter = ArrayAdapter<String>(
+            this,
+            R.layout.recent_list_entry, mobileArray
+        )
+
+        val listView = listSearchRecent
+        listView.setAdapter(adapter)
+
+
         spinnerArrayAdapter.setDropDownViewResource(
             android.R.layout
                 .simple_spinner_dropdown_item
         )
-        spnServers.setAdapter(spinnerArrayAdapter)
+        spnSearchServers.setAdapter(spinnerArrayAdapter)
 
-        searchBtnHistory.setOnClickListener {
+        btnSearchHistory.setOnClickListener {
             if(!checkNameExists()) return@setOnClickListener
             startNavigation(NavigationType.HISTORY)
 
@@ -34,7 +49,7 @@ class SearchActivity : AppCompatActivity() {
             loadMapping(this, R.string.url_spellmap, R.string.local_spellmap)
         }
 
-        searchBtnSummary.setOnClickListener {
+        btnSearchSummary.setOnClickListener {
             if(!checkNameExists()) return@setOnClickListener
             startNavigation(NavigationType.SUMMARY)
 
