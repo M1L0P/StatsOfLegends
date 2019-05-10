@@ -165,6 +165,9 @@ https://\<Region>.api.riotgames.com/lol/league/v4/entries/by-summoner/\<ID>?api_
 
 http://opgg-static.akamaized.net/images/lol/perk/\<Rune ID>.png
 
+### Icon
+
+http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/\<Icon ID>.png
 
 ## Glossar
 
