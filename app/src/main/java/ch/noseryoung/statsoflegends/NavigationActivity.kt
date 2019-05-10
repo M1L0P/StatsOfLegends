@@ -5,8 +5,6 @@ import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
-import androidx.recyclerview.widget.RecyclerView
-import ch.noseryoung.statsoflegends.components.MatchHistoryAdapter
 import ch.noseryoung.statsoflegends.net.APIManager
 import ch.noseryoung.statsoflegends.net.MatchFactory
 import kotlinx.android.synthetic.main.activity_main.*

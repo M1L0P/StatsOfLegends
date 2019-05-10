@@ -1,7 +1,6 @@
 package ch.noseryoung.statsoflegends.net
 
 import android.content.Context
-import android.content.res.Resources
 import android.util.Log
 import ch.noseryoung.statsoflegends.R
 import ch.noseryoung.statsoflegends.data.gameTypes
@@ -53,7 +52,12 @@ object MatchFactory {
 
         val stats = participant["stats"] as JSONObject
 
+        Log.e("MilooliM", "ChampID: ${participant["championId"]}")
+
         val championId = getNameByIdFromMap(context, participant["championId"].toString(), R.string.local_champmap)
+
+        Log.e("MilooliM", "Champ Name: ${championId}")
+
         val kda = Kda(
             stats["kills"] as Int,
             stats["deaths"] as Int,

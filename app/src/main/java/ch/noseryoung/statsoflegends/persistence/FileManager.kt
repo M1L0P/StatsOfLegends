@@ -1,6 +1,7 @@
 package ch.noseryoung.statsoflegends.persistence
 
 import android.content.Context
+import java.io.FileInputStream
 
 
 object FileManager {
@@ -13,5 +14,10 @@ object FileManager {
 
     fun read(context: Context, file: String) : String? {
         return context.openFileInput(file).bufferedReader().readLines().joinToString("\n")
+    }
+
+
+    fun readRaw(context: Context, file: String): FileInputStream? {
+        return context.openFileInput(file)
     }
 }
