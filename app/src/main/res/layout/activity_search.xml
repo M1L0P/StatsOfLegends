@@ -26,7 +26,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:ems="10"
-                    android:id="@+id/inputSuName" android:layout_marginStart="48dp"
+                    android:id="@+id/txtSummonerName" android:layout_marginStart="48dp"
                     app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="32dp"
                     app:layout_constraintTop_toBottomOf="@+id/txtSearchTitle"
                     android:hint="@string/search_txtinput_placeholder" android:layout_marginEnd="8dp"
@@ -36,14 +36,14 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/spnSearchServers" app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="48dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/inputSuName"
-                    android:spinnerMode="dropdown" app:layout_constraintTop_toTopOf="@+id/inputSuName"/>
+                    app:layout_constraintBottom_toBottomOf="@+id/txtSummonerName"
+                    android:spinnerMode="dropdown" app:layout_constraintTop_toTopOf="@+id/txtSummonerName"/>
             <com.google.android.material.button.MaterialButton
                     android:text="@string/search_btn_history"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/btnSearchHistory" android:layout_marginTop="16dp"
-                    app:layout_constraintTop_toBottomOf="@+id/inputSuName" app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtSummonerName" app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="48dp"
                     app:icon="@drawable/ic_stats_black_24dp"/>
             <com.google.android.material.button.MaterialButton
@@ -51,7 +51,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/btnSearchSummary" android:layout_marginTop="16dp"
-                    app:layout_constraintTop_toBottomOf="@+id/inputSuName"
+                    app:layout_constraintTop_toBottomOf="@+id/txtSummonerName"
                     app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="48dp"
                     app:icon="@drawable/ic_history_black_24dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>

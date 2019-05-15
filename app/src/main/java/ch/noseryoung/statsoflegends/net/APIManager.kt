@@ -37,7 +37,7 @@ object APIManager {
                 "https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${accountID}?endIndex=10")
             val json = JSONObject(response)
             try {
-                for (i in 0..(json["matches"] as JSONArray).length() - 1) {
+                for (i in 0 until (json["matches"] as JSONArray).length()) {
 
                     returnVal.add(
                         ((json["matches"] as JSONArray)[i] as JSONObject)["gameId"].toString()
@@ -56,6 +56,23 @@ object APIManager {
     }
 
     fun getMatch(context: Context, accountId: String, matchID: String): Match? {
+        var returnVal: Match? = null
+        val nameGetter = Thread(Runnable {
+            val response = HTTPManager.get(
+                "https://euw1.api.riotgames.com/lol/match/v4/matches/${matchID}")
+            if(response == null) {
+                Log.e("MilooliM", "Failed to get match details")
+                return@Runnable
+            }
+            returnVal = MatchFactory.generate(context, accountId, response)
+        })
+        nameGetter.start()
+        nameGetter.join()
+
+        return returnVal
+    }
+
+    fun getSummonerIcon(context: Context, accountId: String) {
         var returnVal: Match? = null
         val nameGetter = Thread(Runnable {
             val response = HTTPManager.get(
