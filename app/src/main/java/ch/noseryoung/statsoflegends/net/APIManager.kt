@@ -140,8 +140,9 @@ object APIManager {
 
         return success
     }
-    /*
-    fun getSummonerIcon(context: Context, accountId: String) {
+
+
+    private fun getMatch(context: Context, matchID: String): Match? {
         var returnVal: Match? = null
         val nameGetter = Thread(Runnable {
             val response = HTTPManager.get(
@@ -157,5 +158,4 @@ object APIManager {
 
         return returnVal
     }
-    */
 }

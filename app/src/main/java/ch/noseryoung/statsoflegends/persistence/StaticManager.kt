@@ -46,6 +46,15 @@ object StaticManager {
         }
     }
 
+    fun getProfileIcon(context: Context, id: String) : Bitmap? {
+        if(existsLocal("profileicon_$id.png")) return getLocal(context, "profileicon_$id.png")
+        else {
+            val bitmap = getOnline(context, "profileicon/$id")
+            if(bitmap != null) persist(context, "profileicon_$id.png", bitmap)
+            return bitmap
+        }
+    }
+
     fun getPerkIcon(context: Context, id: String) : Bitmap? {
         if(existsLocal("perk_$id.png")) return getLocal(context, "perk_$id.png")
         else {

@@ -13,14 +13,14 @@
             <ImageView
                     android:layout_width="140dp"
                     android:layout_height="140dp" tools:srcCompat="@tools:sample/backgrounds/scenic[1]"
-                    android:id="@+id/imgSumSIcon" app:layout_constraintStart_toStartOf="parent"
+                    android:id="@+id/imgSumIcon" app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
             <TextView
                     android:text="BILGEWATERS CALL"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp" android:id="@+id/txtSumName"
-                    app:layout_constraintStart_toEndOf="@+id/imgSumSIcon" android:layout_marginStart="8dp"
+                    app:layout_constraintStart_toEndOf="@+id/imgSumIcon" android:layout_marginStart="8dp"
                     app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
                     android:layout_marginTop="32dp" app:layout_constraintTop_toTopOf="parent"
                     android:textSize="24sp"/>
@@ -31,7 +31,7 @@
                     android:id="@+id/txtSumLvl"
                     app:layout_constraintTop_toBottomOf="@+id/txtSumName" android:layout_marginBottom="32dp"
                     app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginEnd="8dp" app:layout_constraintStart_toEndOf="@+id/imgSumSIcon"
+                    android:layout_marginEnd="8dp" app:layout_constraintStart_toEndOf="@+id/imgSumIcon"
                     android:layout_marginStart="8dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
