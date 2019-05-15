@@ -28,7 +28,7 @@ class SearchActivity : AppCompatActivity() {
             servers.keys.toList()
         )
 
-        setAsyncListViewAdapter()
+        //setAsyncListViewAdapter()
 
         spinnerArrayAdapter.setDropDownViewResource(
             android.R.layout
@@ -112,7 +112,7 @@ class SearchActivity : AppCompatActivity() {
         val summonerName = txtSummonerName.text.toString()
 
         if(summonerName != DataHolder.summoner.name) {
-            persistRecentSummoner(summonerName, region = "euw1")
+            //persistRecentSummoner(summonerName, region = "euw1")
             var searchSuceeded = false
 
             val nameCheckThread = Thread(Runnable {

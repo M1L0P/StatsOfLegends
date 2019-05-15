@@ -1,17 +1,20 @@
 package ch.noseryoung.statsoflegends.components
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import ch.noseryoung.statsoflegends.R
 import ch.noseryoung.statsoflegends.domain.MatchHistory
 import ch.noseryoung.statsoflegends.persistence.StaticManager
 import kotlin.math.roundToInt
+import android.graphics.drawable.BitmapDrawable
+
+
 
 class MatchHistoryAdapter(private val context: Context, private var data: MatchHistory) :
     RecyclerView.Adapter<MatchHistoryAdapter.MatchHolder>() {
@@ -33,6 +36,8 @@ class MatchHistoryAdapter(private val context: Context, private var data: MatchH
             holder.txtKDACalc.text = match.kda.kda.roundToInt().toString()
         }
         holder.txtGameType.text = match.gameType
+        holder.txtChampionName.text = match.championName
+
 
         // Images
         holder.imgChamp.setImageBitmap(StaticManager.getChampionIcon(context, match.championName))
@@ -45,6 +50,9 @@ class MatchHistoryAdapter(private val context: Context, private var data: MatchH
 
         holder.imgSum1.setImageBitmap(StaticManager.getSpellIcon(context, match.summonerSpellIDs.first))
         holder.imgSum2.setImageBitmap(StaticManager.getSpellIcon(context, match.summonerSpellIDs.second))
+
+        holder.background.setImageBitmap(StaticManager.getChampionSplash(context, match.championName))
+
     }
 
     override fun getItemCount() = data.getMatches().size
@@ -62,5 +70,7 @@ class MatchHistoryAdapter(private val context: Context, private var data: MatchH
         var imgSum1: ImageView = itemView.findViewById(R.id.imgSum1)
         var imgSum2: ImageView = itemView.findViewById(R.id.imgSum2)
         var txtGameType: TextView = itemView.findViewById(R.id.txtGameType)
+        var txtChampionName: TextView = itemView.findViewById(R.id.txtChampionName)
+        var background: ImageView = itemView.findViewById(R.id.imgBackground)
     }
 }

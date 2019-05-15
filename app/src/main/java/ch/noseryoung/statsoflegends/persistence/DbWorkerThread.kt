@@ -2,6 +2,7 @@ package ch.noseryoung.statsoflegends.persistence
 
 import android.os.Handler
 import android.os.HandlerThread
+import android.os.Looper
 
 class DbWorkerThread(threadName: String) : HandlerThread(threadName) {
 

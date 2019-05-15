@@ -3,6 +3,8 @@ package ch.noseryoung.statsoflegends.persistence
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.BitmapShader
+import android.graphics.BlurMaskFilter
 import com.squareup.picasso.Picasso
 import java.io.BufferedInputStream
 import java.io.File
@@ -24,6 +26,11 @@ object StaticManager {
             if(bitmap != null) persist(context, "champ_$id.png", bitmap)
             return bitmap
         }
+    }
+
+    fun getChampionSplash(context: Context, id: String) : Bitmap? {
+        val bitmap = getChampionSplashOnline(context, id)
+        return bitmap
     }
 
     fun getItemIcon(context: Context, id: String) : Bitmap? {
@@ -74,6 +81,24 @@ object StaticManager {
         var bmp: Bitmap? = null
         Picasso.with(context)
             .load(context.getString(R.string.url_static).replace("{}", url))
+            .into(object : Target {
+                override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
+                override fun onBitmapFailed(errorDrawable: Drawable?) {
+                    Log.e("MilooliM", "Failed to get bitmap at ${context.getString(R.string.url_static).replace("{}", url)}")
+                }
+
+                override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
+                    Log.e("MilooliM", "Successfully get bitmap at ${context.getString(R.string.url_static).replace("{}", url)}")
+                    bmp = bitmap
+                }
+            })
+        return bmp
+    }
+
+    private fun getChampionSplashOnline(context: Context, url: String) : Bitmap? {
+        var bmp: Bitmap? = null
+        Picasso.with(context)
+            .load("https://ddragon.leagueoflegends.com/cdn/img/champion/splash/{}_0.jpg".replace("{}", url))
             .into(object : Target {
                 override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
                 override fun onBitmapFailed(errorDrawable: Drawable?) {
