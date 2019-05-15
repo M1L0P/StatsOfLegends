@@ -3,6 +3,7 @@ package ch.noseryoung.statsoflegends
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -27,17 +28,7 @@ class SearchActivity : AppCompatActivity() {
             servers.keys.toList()
         )
 
-        val mobileArray =
-            arrayOf("Bilgewaters call", "SirtubelUJohnson", "Jeff")
-
-        val adapter = ArrayAdapter<String>(
-            this,
-            R.layout.recent_list_entry, mobileArray
-        )
-
-        val listView = listSearchRecent
-        listView.setAdapter(adapter)
-
+        setAsyncListViewAdapter()
 
         spinnerArrayAdapter.setDropDownViewResource(
             android.R.layout
@@ -64,7 +55,6 @@ class SearchActivity : AppCompatActivity() {
 
     fun persistRecentSummoner(summonerName: String, region: String) {
         val db = RecentSummonerDb.getInstance(this)
-        val uiHandler = Handler()
 
         val dbWorkerThread = DbWorkerThread("dbWorkerThread")
         dbWorkerThread.start()
@@ -74,11 +64,42 @@ class SearchActivity : AppCompatActivity() {
         val task = Runnable {
             if(db == null) return@Runnable
             val summonerCount = db.RecentSummonerDao().getCount()
-            if (summonerCount > 3) {
+            if (summonerCount >= 3) {
                 db.RecentSummonerDao().deleteOldest()
             }
             db.RecentSummonerDao().insert(summonerToPersist)
+            Log.e("MilooliM", "persisted: ${summonerToPersist.summonerName}, count: ${db.RecentSummonerDao().getCount()}")
         }
+        dbWorkerThread.postTask(task)
+    }
+
+    fun setAsyncListViewAdapter() {
+        val db = RecentSummonerDb.getInstance(this)
+
+        val dbWorkerThread = DbWorkerThread("dbWorkerThread")
+        dbWorkerThread.start()
+
+        val task = Runnable {
+            if(db == null) return@Runnable
+            val summoners = db.RecentSummonerDao().getAll()
+
+            val nameList = ArrayList<String>()
+
+            for (summoner in summoners) {
+                nameList.add(summoner.summonerName)
+            }
+
+            val adapter = ArrayAdapter<String>(
+                this,
+                R.layout.recent_list_entry, nameList
+            )
+            listSearchRecent.setAdapter(adapter)
+            adapter.notifyDataSetChanged()
+            Log.e("MilooliM", "persisted: got: ${nameList}")
+        }
+
+        dbWorkerThread.looper
+
         dbWorkerThread.postTask(task)
     }
 
@@ -92,6 +113,7 @@ class SearchActivity : AppCompatActivity() {
 
         if(summonerName != DataHolder.summoner.name) {
             var searchSuceeded = false
+            persistRecentSummoner(summonerName, region = "euw1")
 
             val nameCheckThread = Thread(Runnable {
                 searchSuceeded = APIManager.fetch(this, summonerName)

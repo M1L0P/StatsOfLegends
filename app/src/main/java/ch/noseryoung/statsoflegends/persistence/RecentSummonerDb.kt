@@ -23,9 +23,5 @@ abstract class RecentSummonerDb : RoomDatabase() {
             }
             return INSTANCE
         }
-
-        fun destroyInstance() {
-            INSTANCE = null
-        }
     }
 }
