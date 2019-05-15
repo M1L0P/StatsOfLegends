@@ -12,9 +12,12 @@ interface RecentSummonerDao {
     @Insert(onConflict = 1)
     fun insert(recentSummonerData: RecentSummonerData)
 
-    @Query("DELETE from RecentSummonerdata WHERE id = (SELECT MIN(Id) FROM RecentSummonerData)")
+    @Query("DELETE FROM RecentSummonerdata WHERE id = (SELECT MIN(Id) FROM RecentSummonerData)")
     fun deleteOldest()
 
     @Query("SELECT count(id) FROM RecentSummonerData")
     fun getCount(): Int
+
+    @Query("DELETE FROM RecentSummonerData WHERE summonerName=:summonerName")
+    fun deleteBySummonerName(summonerName: String)
 }

@@ -3,7 +3,7 @@ package ch.noseryoung.statsoflegends
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.text.Editable
+import android.os.HandlerThread
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
@@ -13,17 +13,18 @@ import ch.noseryoung.statsoflegends.data.DataHolder
 import ch.noseryoung.statsoflegends.data.servers
 import ch.noseryoung.statsoflegends.net.APIManager
 import ch.noseryoung.statsoflegends.net.HTTPManager.loadMapping
-import ch.noseryoung.statsoflegends.persistence.DbWorkerThread
 import ch.noseryoung.statsoflegends.persistence.RecentSummonerData
 import ch.noseryoung.statsoflegends.persistence.RecentSummonerDb
 import kotlinx.android.synthetic.main.activity_search.*
 import android.widget.AdapterView
 
 
-
-
-
 class SearchActivity : AppCompatActivity() {
+
+    lateinit var dbInstance: RecentSummonerDb
+    lateinit var dbWorkerThread: HandlerThread
+    lateinit var dbThreadHandler: Handler
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
@@ -33,7 +34,11 @@ class SearchActivity : AppCompatActivity() {
             servers.keys.toList()
         )
 
-        setAsyncListViewAdapter()
+        dbInstance = RecentSummonerDb.getInstance(this)!!
+        dbWorkerThread = HandlerThread("dbWorker")
+        dbWorkerThread.start()
+        dbThreadHandler = Handler(dbWorkerThread.looper)
+
 
         spinnerArrayAdapter.setDropDownViewResource(
             android.R.layout
@@ -58,37 +63,33 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        setAsyncListViewAdapter()
+    }
+
     fun persistRecentSummoner(summonerName: String, region: String) {
-        val db = RecentSummonerDb.getInstance(this)
-
-        val dbWorkerThread = DbWorkerThread("dbWorkerThread")
-        dbWorkerThread.start()
-
         val summonerToPersist = RecentSummonerData(summonerName = summonerName, region = region)
 
         val task = Runnable {
-            if(db == null) return@Runnable
-            val summonerCount = db.RecentSummonerDao().getCount()
+            if(dbInstance == null) return@Runnable
+            dbInstance.RecentSummonerDao().deleteBySummonerName(summonerName)
+
+            val summonerCount = dbInstance.RecentSummonerDao().getCount()
             if (summonerCount >= 3) {
-                db.RecentSummonerDao().deleteOldest()
+                dbInstance.RecentSummonerDao().deleteOldest()
             }
-            db.RecentSummonerDao().insert(summonerToPersist)
-            Log.e("MilooliM", "persisted: ${summonerToPersist.summonerName}, count: ${db.RecentSummonerDao().getCount()}")
+            dbInstance.RecentSummonerDao().insert(summonerToPersist)
         }
 
         dbWorkerThread.looper
-        dbWorkerThread.postTask(task)
+        dbThreadHandler.post(task)
     }
 
     fun setAsyncListViewAdapter() {
-        val db = RecentSummonerDb.getInstance(this)
-
-        val dbWorkerThread = DbWorkerThread("dbWorkerThread")
-        dbWorkerThread.start()
-
         val task = Runnable {
-            if(db == null) return@Runnable
-            val summoners = db.RecentSummonerDao().getAll()
+            if(dbInstance == null) return@Runnable
+            val summoners = dbInstance.RecentSummonerDao().getAll()
 
             val nameList = ArrayList<String>()
 
@@ -96,13 +97,13 @@ class SearchActivity : AppCompatActivity() {
                 nameList.add(summoner.summonerName)
             }
 
-            val adapter = ArrayAdapter<String>(
-                this,
-                R.layout.recent_list_entry, nameList
-            )
-            listSearchRecent.setAdapter(adapter)
+            if (nameList.size == 0) {
+                searchLayout.visibility = View.GONE
+            }
+
+            val adapter = ArrayAdapter<String>(this, R.layout.recent_list_entry, nameList.reversed())
+            listSearchRecent.adapter = adapter
             adapter.notifyDataSetChanged()
-            Log.e("MilooliM", "persisted: got: ${nameList}")
 
             listSearchRecent.onItemClickListener = object : android.widget.AdapterView.OnItemClickListener {
                 override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
@@ -113,8 +114,7 @@ class SearchActivity : AppCompatActivity() {
         }
 
         dbWorkerThread.looper
-
-        dbWorkerThread.postTask(task)
+        dbThreadHandler.post(task)
     }
 
     fun startNavigation(type: NavigationType) {
