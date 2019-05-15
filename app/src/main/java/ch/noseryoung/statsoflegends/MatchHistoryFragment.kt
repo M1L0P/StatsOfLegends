@@ -20,4 +20,9 @@ class MatchHistoryFragment : Fragment() {
 
         return root
     }
+
+    override fun onResume() {
+        super.onResume()
+        MatchFactory.history.getMatches().clear()
+    }
 }

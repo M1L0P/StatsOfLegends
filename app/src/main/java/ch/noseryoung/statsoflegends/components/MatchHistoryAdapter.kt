@@ -1,6 +1,7 @@
 package ch.noseryoung.statsoflegends.components
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +27,11 @@ class MatchHistoryAdapter(private val context: Context, private var data: MatchH
         val deaths = match.kda.deaths
         val assists = match.kda.assists
         holder.txtKDA.text = "${kills}/${deaths}/${assists}"
-        holder.txtKDACalc.text = match.kda.kda.roundToInt().toString()
+        if(match.kda.deaths == 0) {
+            holder.txtKDACalc.text = "Perf"
+        } else {
+            holder.txtKDACalc.text = match.kda.kda.roundToInt().toString()
+        }
         holder.txtGameType.text = match.gameType
 
         // Images

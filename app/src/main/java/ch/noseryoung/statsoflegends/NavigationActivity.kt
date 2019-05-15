@@ -2,6 +2,7 @@ package ch.noseryoung.statsoflegends
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
@@ -13,16 +14,21 @@ import kotlinx.android.synthetic.main.fragment_matchhistory.*
 
 class NavigationActivity : AppCompatActivity() {
 
-    private fun loadMatchHistory() {
+    private var accountId: String? = null
+
+    private fun loadMatchHistory(summonerName: String) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.viewFragmentHolder, MatchHistoryFragment())
             .commit()
 
         Thread(Runnable {
-            val accoundId = APIManager.getAccountID("dabi0102")
-            val matchIds = APIManager.getMatchIDs(accoundId)
+            val matchIds = APIManager.getMatchIDs(accountId!!)
+            if(matchIds.isEmpty()) {
+                Toast.makeText(this, "Failed to get matches ($summonerName)", Toast.LENGTH_LONG).show()
+                return@Runnable
+            }
             for (id in matchIds) {
-                val match = APIManager.getMatch(this, "dabi0102", id)
+                val match = APIManager.getMatch(this, summonerName, id)
                 if (match != null) {
                     MatchFactory.history.addMatch(match)
 
@@ -34,16 +40,27 @@ class NavigationActivity : AppCompatActivity() {
         }).start()
     }
 
-    private fun loadSummary() {
+    private fun loadSummary(summonerName: String) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.viewFragmentHolder, SummaryFragment())
             .commit()
+    }
+
+    private fun getAccountID() {
+        this.accountId = intent.extras.getString("accountId")
+        if(this.accountId == null) {
+            this.finish()
+            return
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
+
+        // Load the summoner name from intent
+        getAccountID()
 
         navView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
@@ -54,11 +71,11 @@ class NavigationActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_history -> {
-                    loadMatchHistory()
+                    loadMatchHistory(this.accountId!!)
                     true
                 }
                 R.id.navigation_summary -> {
-                    loadSummary()
+                    loadSummary(this.accountId!!)
                     true
                 }
                 else -> false
@@ -68,11 +85,11 @@ class NavigationActivity : AppCompatActivity() {
         // Set selected intend
         when (intent.extras.getInt("type")) {
             NavigationType.HISTORY.value -> {
-                loadMatchHistory()
+                loadMatchHistory(this.accountId!!)
                 nav_view.menu.get(1).setChecked(true)
             }
             NavigationType.SUMMARY.value -> {
-                loadSummary()
+                loadSummary(this.accountId!!)
                 nav_view.menu.get(2).setChecked(true)
             }
         }

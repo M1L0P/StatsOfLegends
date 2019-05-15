@@ -16,7 +16,7 @@ object MatchFactory {
 
     var history = MatchHistory()
 
-    fun generate(context: Context, summonerName: String, jsonString: String) : Match {
+    fun generate(context: Context, accountId: String, jsonString: String) : Match {
         val json = JSONObject(jsonString)
 
         var participantId: String? = null
@@ -25,13 +25,14 @@ object MatchFactory {
         val participantIds = json["participantIdentities"] as JSONArray
         for(i in 0 until participantIds.length()) {
             val player = (participantIds[i] as JSONObject)["player"] as JSONObject
-            if(player["summonerName"].toString().toLowerCase() == summonerName.toLowerCase()) {
+
+            if(player["accountId"].toString().toLowerCase() == accountId.toLowerCase()) {
                 participantId = (participantIds[i] as JSONObject)["participantId"].toString()
                 break
             }
         }
         if(participantId == null) {
-            Log.e("MilooliM", "Failed to get participant ID for player ${summonerName}")
+            Log.e("MilooliM", "Failed to get participant ID for player ${accountId}")
             throw Exception()
         }
 
@@ -46,7 +47,7 @@ object MatchFactory {
             }
         }
         if(participant == null) {
-            Log.e("MilooliM", "Failed to get participant for player ${summonerName}")
+            Log.e("MilooliM", "Failed to get participant for player ${accountId}")
             throw Exception()
         }
 

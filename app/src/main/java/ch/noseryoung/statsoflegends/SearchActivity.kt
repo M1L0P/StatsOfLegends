@@ -26,7 +26,6 @@ class SearchActivity : AppCompatActivity() {
         spnServers.setAdapter(spinnerArrayAdapter)
 
         searchBtnHistory.setOnClickListener {
-            if(!checkNameExists()) return@setOnClickListener
             startNavigation(NavigationType.HISTORY)
 
             // Get champion and spell mapping
@@ -35,7 +34,6 @@ class SearchActivity : AppCompatActivity() {
         }
 
         searchBtnSummary.setOnClickListener {
-            if(!checkNameExists()) return@setOnClickListener
             startNavigation(NavigationType.SUMMARY)
 
             // Get champion and spell mapping
@@ -45,19 +43,34 @@ class SearchActivity : AppCompatActivity() {
     }
 
     fun startNavigation(type: NavigationType) {
+        if(txtSummonerName.text == null || txtSummonerName.text!!.isEmpty()) {
+            Toast.makeText(this, "No summoner name entered", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val summonerName = txtSummonerName.text.toString()
+        var accountId = ""
+
+        val nameCheckThread = Thread(Runnable {
+            accountId = APIManager.getAccountID(summonerName)
+            if(accountId.isEmpty()) {
+                return@Runnable
+            }
+        })
+
+        nameCheckThread.start()
+        nameCheckThread.join()
+
+        if(accountId.isEmpty()) {
+            Toast.makeText(this, "Name does not exist on specified server", Toast.LENGTH_LONG).show()
+            return
+        }
+
         val intent = Intent(this, NavigationActivity::class.java)
         intent.putExtra("type", type.value)
+        intent.putExtra("accountId", accountId)
 
         startActivity(intent)
-    }
-
-    fun checkNameExists(): Boolean {
-        val text = "Name does not exist on specified server!"
-
-        val toast = Toast.makeText(this.applicationContext, text, Toast.LENGTH_LONG)
-        toast.show()
-
-        return true
     }
 }
 
