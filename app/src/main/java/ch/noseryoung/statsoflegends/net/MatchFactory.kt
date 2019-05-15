@@ -79,7 +79,7 @@ object MatchFactory {
         val summonerSpell2 = getNameByIdFromMap(context, participant["spell2Id"].toString(), R.string.local_spellmap)
 
         return Match(
-            championId, kda, items, keystoneId, gameType!!, won, Pair(summonerSpell1, summonerSpell2))
+            json["gameId"].toString(), championId, kda, items, keystoneId, gameType, won, Pair(summonerSpell1, summonerSpell2))
     }
 
     private fun getNameByIdFromMap(context: Context, id: String, mapId: Int) : String {
