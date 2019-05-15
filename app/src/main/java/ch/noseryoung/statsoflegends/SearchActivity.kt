@@ -88,6 +88,7 @@ class SearchActivity : AppCompatActivity() {
         }
 
         // posts the Task to the ThreadHandler
+        dbThreadHandler.looper
         dbThreadHandler.post(task)
     }
 
@@ -121,6 +122,7 @@ class SearchActivity : AppCompatActivity() {
         }
 
         // posts the task to the ThreadHandler
+        dbThreadHandler.looper
         dbThreadHandler.post(task)
     }
 
