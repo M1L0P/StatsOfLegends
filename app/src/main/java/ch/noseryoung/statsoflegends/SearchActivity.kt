@@ -112,8 +112,8 @@ class SearchActivity : AppCompatActivity() {
         val summonerName = txtSummonerName.text.toString()
 
         if(summonerName != DataHolder.summoner.name) {
-            var searchSuceeded = false
             persistRecentSummoner(summonerName, region = "euw1")
+            var searchSuceeded = false
 
             val nameCheckThread = Thread(Runnable {
                 searchSuceeded = APIManager.fetch(this, summonerName)
