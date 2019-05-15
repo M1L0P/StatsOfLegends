@@ -1,32 +1,19 @@
 package ch.noseryoung.statsoflegends.net
 
 import android.content.Context
-import android.content.res.Resources
 import android.util.Log
-import ch.noseryoung.statsoflegends.R
 import ch.noseryoung.statsoflegends.domain.Match
-import ch.noseryoung.statsoflegends.persistence.FileManager
-import com.squareup.okhttp.*
 import org.json.JSONArray
 import org.json.JSONObject
-import java.io.IOException
 
 
 object APIManager {
-    /*
-     * 1. Get account ID by name
-     * Matches:
-     *  1. Get match ID by account ID
-     *    1. Get match by match ID
-     */
-
-    private val MEDIA_TYPE = MediaType.parse("application/json")
 
     fun getAccountID(name: String): String {
         var returnVal = ""
         val nameGetter = Thread(Runnable {
             val response = HTTPManager.get(
-                "https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/sirtubelujohnson")
+                "https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/$name")
             val json = JSONObject(response)
             returnVal = json["accountId"].toString()
         })
