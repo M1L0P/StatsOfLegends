@@ -2,12 +2,16 @@ package ch.noseryoung.statsoflegends
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ch.noseryoung.statsoflegends.data.servers
 import ch.noseryoung.statsoflegends.net.APIManager
 import ch.noseryoung.statsoflegends.net.HTTPManager.loadMapping
+import ch.noseryoung.statsoflegends.persistence.DbWorkerThread
+import ch.noseryoung.statsoflegends.persistence.RecentSummonerData
+import ch.noseryoung.statsoflegends.persistence.RecentSummonerDb
 import kotlinx.android.synthetic.main.activity_search.*
 
 
@@ -42,6 +46,7 @@ class SearchActivity : AppCompatActivity() {
 
         btnSearchHistory.setOnClickListener {
             if(!checkNameExists()) return@setOnClickListener
+
             startNavigation(NavigationType.HISTORY)
 
             // Get champion and spell mapping
@@ -57,6 +62,26 @@ class SearchActivity : AppCompatActivity() {
             loadMapping(this, R.string.url_champmap, R.string.local_champmap)
             loadMapping(this, R.string.url_spellmap, R.string.local_spellmap)
         }
+    }
+
+    fun persistRecentSummoner(summonerName: String, region: String) {
+        val db = RecentSummonerDb.getInstance(this)
+        val uiHandler = Handler()
+
+        val dbWorkerThread = DbWorkerThread("dbWorkerThread")
+        dbWorkerThread.start()
+
+        val summonerToPersist = RecentSummonerData(summonerName = summonerName, region = region)
+
+        val task = Runnable {
+            if(db == null) return@Runnable
+            val summonerCount = db.RecentSummonerDao().getCount()
+            if (summonerCount > 3) {
+                db.RecentSummonerDao().deleteOldest()
+            }
+            db.RecentSummonerDao().insert(summonerToPersist)
+        }
+        dbWorkerThread.postTask(task)
     }
 
     fun startNavigation(type: NavigationType) {
