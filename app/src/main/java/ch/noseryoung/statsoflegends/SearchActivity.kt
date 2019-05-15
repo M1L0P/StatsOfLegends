@@ -3,7 +3,9 @@ package ch.noseryoung.statsoflegends
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.text.Editable
 import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +17,9 @@ import ch.noseryoung.statsoflegends.persistence.DbWorkerThread
 import ch.noseryoung.statsoflegends.persistence.RecentSummonerData
 import ch.noseryoung.statsoflegends.persistence.RecentSummonerDb
 import kotlinx.android.synthetic.main.activity_search.*
+import android.widget.AdapterView
+
+
 
 
 
@@ -70,6 +75,8 @@ class SearchActivity : AppCompatActivity() {
             db.RecentSummonerDao().insert(summonerToPersist)
             Log.e("MilooliM", "persisted: ${summonerToPersist.summonerName}, count: ${db.RecentSummonerDao().getCount()}")
         }
+
+        dbWorkerThread.looper
         dbWorkerThread.postTask(task)
     }
 
@@ -96,6 +103,13 @@ class SearchActivity : AppCompatActivity() {
             listSearchRecent.setAdapter(adapter)
             adapter.notifyDataSetChanged()
             Log.e("MilooliM", "persisted: got: ${nameList}")
+
+            listSearchRecent.onItemClickListener = object : android.widget.AdapterView.OnItemClickListener {
+                override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                    val item = listSearchRecent.getItemAtPosition(position) as String
+                    txtSummonerName.setText(item)
+                }
+            }
         }
 
         dbWorkerThread.looper
