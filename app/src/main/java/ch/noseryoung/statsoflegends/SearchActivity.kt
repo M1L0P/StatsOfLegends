@@ -16,6 +16,7 @@ import ch.noseryoung.statsoflegends.persistence.RecentSummonerData
 import ch.noseryoung.statsoflegends.persistence.RecentSummonerDb
 import kotlinx.android.synthetic.main.activity_search.*
 import android.widget.AdapterView
+import androidx.annotation.WorkerThread
 
 
 class SearchActivity : AppCompatActivity() {
@@ -36,10 +37,9 @@ class SearchActivity : AppCompatActivity() {
 
         // Initialize database instance and start dbWorker thread
         dbInstance = RecentSummonerDb.getInstance(this)!!
-        dbThreadHandler = Handler(dbWorkerThread.looper)
-        dbWorkerThread.start()
         dbWorkerThread = HandlerThread("dbWorker")
-
+        dbWorkerThread.start()
+        dbThreadHandler = Handler(dbWorkerThread.looper)
 
         spinnerArrayAdapter.setDropDownViewResource(
             android.R.layout
