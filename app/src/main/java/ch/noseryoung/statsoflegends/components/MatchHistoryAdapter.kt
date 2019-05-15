@@ -21,7 +21,7 @@ class MatchHistoryAdapter(private val context: Context, private var data: MatchH
     }
 
     override fun onBindViewHolder(holder: MatchHolder, position: Int) {
-        val match = data.matches[position]
+        val match = data.getMatches()[position]
         val kills = match.kda.kills
         val deaths = match.kda.deaths
         val assists = match.kda.assists
@@ -38,11 +38,11 @@ class MatchHistoryAdapter(private val context: Context, private var data: MatchH
         holder.imgItem5.setImageBitmap(StaticManager.getItemIcon(context, match.itemID[4]))
         holder.imgItem6.setImageBitmap(StaticManager.getItemIcon(context, match.itemID[5]))
 
-        holder.imgSum1.setImageBitmap(StaticManager.getItemIcon(context, match.summonerSpellIDs.first))
-        holder.imgSum1.setImageBitmap(StaticManager.getItemIcon(context, match.summonerSpellIDs.second))
+        holder.imgSum1.setImageBitmap(StaticManager.getSpellIcon(context, match.summonerSpellIDs.first))
+        holder.imgSum2.setImageBitmap(StaticManager.getSpellIcon(context, match.summonerSpellIDs.second))
     }
 
-    override fun getItemCount() = data.matches.size
+    override fun getItemCount() = data.getMatches().size
 
     class MatchHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var imgChamp: ImageView = itemView.findViewById(R.id.imgChamp)
