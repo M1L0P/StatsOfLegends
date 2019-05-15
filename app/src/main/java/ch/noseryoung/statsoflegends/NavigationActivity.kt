@@ -19,12 +19,12 @@ class NavigationActivity : AppCompatActivity() {
             .commit()
 
         Thread(Runnable {
-            val accoundId = APIManager.getAccountID("sirtubelujohnson")
+            val accoundId = APIManager.getAccountID("dabi0102")
             val matchIds = APIManager.getMatchIDs(accoundId)
             for (id in matchIds) {
-                val match = APIManager.getMatch(this, "sirtubelujohnson", id)
+                val match = APIManager.getMatch(this, "dabi0102", id)
                 if (match != null) {
-                    MatchFactory.history.matches.add(match)
+                    MatchFactory.history.addMatch(match)
 
                     runOnUiThread {
                         rcyHistory.adapter?.notifyDataSetChanged()
