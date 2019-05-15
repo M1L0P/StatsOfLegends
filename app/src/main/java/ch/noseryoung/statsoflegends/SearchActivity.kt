@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -21,6 +20,7 @@ import android.widget.AdapterView
 
 class SearchActivity : AppCompatActivity() {
 
+    // lateinit variables for database connection and ThreadHandling
     lateinit var dbInstance: RecentSummonerDb
     lateinit var dbWorkerThread: HandlerThread
     lateinit var dbThreadHandler: Handler
@@ -34,6 +34,7 @@ class SearchActivity : AppCompatActivity() {
             servers.keys.toList()
         )
 
+        // Initialize database instance and start dbWorker thread
         dbInstance = RecentSummonerDb.getInstance(this)!!
         dbWorkerThread = HandlerThread("dbWorker")
         dbWorkerThread.start()
@@ -44,7 +45,7 @@ class SearchActivity : AppCompatActivity() {
             android.R.layout
                 .simple_spinner_dropdown_item
         )
-        spnSearchServers.setAdapter(spinnerArrayAdapter)
+        spnSearchServers.adapter = spinnerArrayAdapter
 
         btnSearchHistory.setOnClickListener {
             startNavigation(NavigationType.HISTORY)
@@ -68,56 +69,62 @@ class SearchActivity : AppCompatActivity() {
         setAsyncListViewAdapter()
     }
 
-    fun persistRecentSummoner(summonerName: String, region: String) {
+    // is called after a search request was successful and persists the summoner to the db
+    private fun persistRecentSummoner(summonerName: String, region: String) {
         val summonerToPersist = RecentSummonerData(summonerName = summonerName, region = region)
 
+        // runnable to post to ThreadHandler
         val task = Runnable {
-            if(dbInstance == null) return@Runnable
-            dbInstance.RecentSummonerDao().deleteBySummonerName(summonerName)
+            // Deletes the summoner if he does already exist
+            dbInstance.recentSummonerDao().deleteBySummonerName(summonerName)
 
-            val summonerCount = dbInstance.RecentSummonerDao().getCount()
+            // Deletes the "oldest" summoner if there are more than three persisted summoners
+            val summonerCount = dbInstance.recentSummonerDao().getCount()
             if (summonerCount >= 3) {
-                dbInstance.RecentSummonerDao().deleteOldest()
+                dbInstance.recentSummonerDao().deleteOldest()
             }
-            dbInstance.RecentSummonerDao().insert(summonerToPersist)
+            // Persists the summoner
+            dbInstance.recentSummonerDao().insert(summonerToPersist)
         }
 
-        dbWorkerThread.looper
+        // posts the Task to the ThreadHandler
         dbThreadHandler.post(task)
     }
 
-    fun setAsyncListViewAdapter() {
+    // loads persisted recently searched summoner names and load them into the listview
+    private fun setAsyncListViewAdapter() {
+        // runnable to post to ThreadHandler
         val task = Runnable {
-            if(dbInstance == null) return@Runnable
-            val summoners = dbInstance.RecentSummonerDao().getAll()
+            val summoners = dbInstance.recentSummonerDao().getAll()
 
+            // parses the summoner names out of the RecentSummoner objects
             val nameList = ArrayList<String>()
-
             for (summoner in summoners) {
                 nameList.add(summoner.summonerName)
             }
 
+            // removes the RecentSearch GUI element if no Summoner is persisted
             if (nameList.size == 0) {
                 searchLayout.visibility = View.GONE
             }
 
+            // creates and sets the adapter for the ListView
             val adapter = ArrayAdapter<String>(this, R.layout.recent_list_entry, nameList.reversed())
             listSearchRecent.adapter = adapter
-            adapter.notifyDataSetChanged()
 
-            listSearchRecent.onItemClickListener = object : android.widget.AdapterView.OnItemClickListener {
-                override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+            // sets the onclickListener for the listSearch
+            listSearchRecent.onItemClickListener =
+                AdapterView.OnItemClickListener { _, _, position, _ ->
                     val item = listSearchRecent.getItemAtPosition(position) as String
                     txtSummonerName.setText(item)
                 }
-            }
         }
 
-        dbWorkerThread.looper
+        // posts the task to the ThreadHandler
         dbThreadHandler.post(task)
     }
 
-    fun startNavigation(type: NavigationType) {
+    private fun startNavigation(type: NavigationType) {
         if(txtSummonerName.text == null || txtSummonerName.text!!.isEmpty()) {
             Toast.makeText(this, "No summoner name entered", Toast.LENGTH_SHORT).show()
             return
