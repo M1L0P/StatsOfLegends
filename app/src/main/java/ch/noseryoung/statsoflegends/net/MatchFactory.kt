@@ -14,8 +14,6 @@ import org.json.JSONObject
 
 object MatchFactory {
 
-    var history = MatchHistory()
-
     fun generate(context: Context, accountId: String, jsonString: String) : Match {
         val json = JSONObject(jsonString)
 
@@ -25,6 +23,9 @@ object MatchFactory {
         val participantIds = json["participantIdentities"] as JSONArray
         for(i in 0 until participantIds.length()) {
             val player = (participantIds[i] as JSONObject)["player"] as JSONObject
+
+            Log.e("MilooliM", "ID: "+player["accountId"].toString().toLowerCase())
+            Log.e("MilooliM", "AccountID: "+accountId.toLowerCase())
 
             if(player["accountId"].toString().toLowerCase() == accountId.toLowerCase()) {
                 participantId = (participantIds[i] as JSONObject)["participantId"].toString()

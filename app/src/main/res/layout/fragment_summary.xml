@@ -19,7 +19,7 @@
             <TextView
                     android:text="BILGEWATERS CALL"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp" android:id="@+id/txtSumSName"
+                    android:layout_height="0dp" android:id="@+id/txtSumName"
                     app:layout_constraintStart_toEndOf="@+id/imgSumSIcon" android:layout_marginStart="8dp"
                     app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
                     android:layout_marginTop="32dp" app:layout_constraintTop_toTopOf="parent"
@@ -28,8 +28,8 @@
                     android:text="Lvl 192"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/txtSumSLvl"
-                    app:layout_constraintTop_toBottomOf="@+id/txtSumSName" android:layout_marginBottom="32dp"
+                    android:id="@+id/txtSumLvl"
+                    app:layout_constraintTop_toBottomOf="@+id/txtSumName" android:layout_marginBottom="32dp"
                     app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="8dp" app:layout_constraintStart_toEndOf="@+id/imgSumSIcon"
                     android:layout_marginStart="8dp"/>

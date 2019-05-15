@@ -27,6 +27,8 @@ object StaticManager {
     }
 
     fun getItemIcon(context: Context, id: String) : Bitmap? {
+        if(id == "0") return null
+
         if(existsLocal("item_$id.png")) return getLocal(context, "item_$id.png")
         else {
             val bitmap = getOnline(context, "item/$id")

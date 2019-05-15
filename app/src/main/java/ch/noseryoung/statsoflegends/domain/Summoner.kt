@@ -1,9 +1,12 @@
 package ch.noseryoung.statsoflegends.domain
 
-data class Summoner (
-    var icon: Int,
-    var name: String,
-    var level: Int,
-    var flex: Rank,
-    var solo: Rank
-)
+class Summoner {
+    var accountId: String = ""
+    var summonerId: String = ""
+    var name: String = ""
+    var nameBeauty: String = ""
+    var icon: String = ""
+    var level: Int = 0
+    var flex: Rank = Rank()
+    var solo: Rank = Rank()
+}

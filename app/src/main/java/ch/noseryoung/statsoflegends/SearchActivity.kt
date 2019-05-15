@@ -6,6 +6,7 @@ import android.os.Handler
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import ch.noseryoung.statsoflegends.data.DataHolder
 import ch.noseryoung.statsoflegends.data.servers
 import ch.noseryoung.statsoflegends.net.APIManager
 import ch.noseryoung.statsoflegends.net.HTTPManager.loadMapping
@@ -88,26 +89,25 @@ class SearchActivity : AppCompatActivity() {
         }
 
         val summonerName = txtSummonerName.text.toString()
-        var accountId = ""
 
-        val nameCheckThread = Thread(Runnable {
-            accountId = APIManager.getAccountID(summonerName)
-            if(accountId.isEmpty()) {
-                return@Runnable
+        if(summonerName != DataHolder.summoner.name) {
+            var searchSuceeded = false
+
+            val nameCheckThread = Thread(Runnable {
+                searchSuceeded = APIManager.fetch(this, summonerName)
+            })
+
+            nameCheckThread.start()
+            nameCheckThread.join()
+
+            if (!searchSuceeded) {
+                Toast.makeText(this, "Name does not exist on specified server", Toast.LENGTH_LONG).show()
+                return
             }
-        })
-
-        nameCheckThread.start()
-        nameCheckThread.join()
-
-        if(accountId.isEmpty()) {
-            Toast.makeText(this, "Name does not exist on specified server", Toast.LENGTH_LONG).show()
-            return
         }
 
         val intent = Intent(this, NavigationActivity::class.java)
         intent.putExtra("type", type.value)
-        intent.putExtra("accountId", accountId)
 
         startActivity(intent)
     }
