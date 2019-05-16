@@ -15,9 +15,8 @@ object APIManager {
         // Clear existing data
         DataHolder.clear()
 
-        var success = true
         var response: String? = null
-        var json = JSONObject()
+        val json: JSONObject
 
         DataHolder.summoner.name = name
         val nameGetter = Thread(Runnable {
@@ -48,16 +47,14 @@ object APIManager {
                     DataHolder.summoner.nameBeauty = json["name"].toString()
                     DataHolder.summoner.icon = json["profileIconId"].toString()
                     DataHolder.summoner.level = Integer.parseInt(json["summonerLevel"].toString())
-                    success = getRanks()
-                } catch (ex: JSONException) {
-                    success = false
-                }
+                    getRanks()
+                } catch (ex: JSONException) {}
             })
             summonerGetter.start()
             summonerGetter.join()
 
             Thread(Runnable {
-                success = loadMatches(context)
+                loadMatches(context)
             }).start()
         }).start()
 

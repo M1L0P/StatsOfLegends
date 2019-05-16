@@ -149,6 +149,8 @@ class SearchActivity : AppCompatActivity() {
                 Toast.makeText(this, "Name does not exist on specified server", Toast.LENGTH_LONG).show()
                 return
             }
+
+            persistRecentSummoner(summonerName, "euw1")
         }
 
         val intent = Intent(this, NavigationActivity::class.java)
