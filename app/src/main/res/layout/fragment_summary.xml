@@ -163,7 +163,7 @@
                 <TextView
                         android:text="Win rate in %"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/textView2"
+                        android:layout_height="wrap_content" android:id="@+id/txtSumPrimaryWin"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="@+id/progPrimaryWin"
                         app:layout_constraintBottom_toBottomOf="@+id/progPrimaryWin"
@@ -190,7 +190,7 @@
                 <TextView
                         android:text="Pick rate in %"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/textView3"
+                        android:layout_height="wrap_content" android:id="@+id/txtSumPrimaryPick"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="@+id/progPrimary"
                         app:layout_constraintBottom_toBottomOf="@+id/progPrimary"
@@ -234,7 +234,7 @@
                 <TextView
                         android:text="Win rate in %"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/textView4"
+                        android:layout_height="wrap_content" android:id="@+id/txtSumSecondaryWin"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="@+id/progSecondaryWin"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -262,7 +262,7 @@
                 <TextView
                         android:text="Pick rate in %"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/textView5"
+                        android:layout_height="wrap_content" android:id="@+id/txtSumSecondaryPick"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/progSecondary"

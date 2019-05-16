@@ -1,13 +1,17 @@
 package ch.noseryoung.statsoflegends.data
 
+import android.util.Log
 import ch.noseryoung.statsoflegends.domain.MatchHistory
 import ch.noseryoung.statsoflegends.domain.Summoner
+import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.math.roundToInt
 
 object DataHolder {
     var region: String = ""
     var matchHistory: MatchHistory = MatchHistory()
     var summoner: Summoner = Summoner()
+
+    var threadList: CopyOnWriteArrayList<Thread> = CopyOnWriteArrayList()
 
     fun clear() {
         summoner = Summoner()
@@ -20,6 +24,14 @@ object DataHolder {
 
     fun getLooses() {
 
+    }
+
+    fun getPrimaryChampionWinRate() : Int {
+        return getWinRate(getPrimaryChampion())
+    }
+
+    fun getSecondaryChampionWinRate() : Int {
+        return getWinRate(getSecondaryChampion())
     }
 
     fun getPrimaryChampionRate() : Int {
@@ -43,10 +55,28 @@ object DataHolder {
         return ""
     }
 
+    private fun getWinRate(champion: String) : Int {
+        var won = 0
+        var played = 0
+
+        for(match in matchHistory.getMatches()) {
+            if(match.championName == champion) {
+                played++
+                if(match.won) {
+                    won++
+                }
+            }
+        }
+
+        return 100.div(played).times(won)
+    }
+
     private fun championFrequencyList() : Set<String> {
         val champList = ArrayList<String>()
         for(match in matchHistory.getMatches()) {
-            champList.add(match.championName)
+            if(!match.championName.isEmpty()) {
+                champList.add(match.championName)
+            }
         }
 
         val champFreqMap = HashMap<String, Int>()
@@ -54,9 +84,12 @@ object DataHolder {
             if(!champFreqMap.containsKey(champ)) {
                 champFreqMap[champ] = 1
             } else {
-                champFreqMap[champ]?.inc()
+                champFreqMap[champ] = champFreqMap[champ]!!.plus(1)
             }
         }
+
+        Log.e("MilooliM", champFreqMap.toString())
+        Log.e("MilooliM", champFreqMap.toList().sortedBy { (_, value) -> value}.reversed().toMap().keys.toString())
 
         return champFreqMap.toList().sortedBy { (_, value) -> value}.reversed().toMap().keys
     }

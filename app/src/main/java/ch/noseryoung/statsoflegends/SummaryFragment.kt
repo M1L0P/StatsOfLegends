@@ -31,6 +31,18 @@ class SummaryFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_summary, container, false)
 
+        update(root)
+
+        DataHolder.matchHistory.addOnChange(Runnable {
+            root.post {
+                update(root)
+            }
+        })
+
+        return root
+    }
+
+    fun update(root: View) {
         root.findViewById<TextView>(R.id.txtSumName).text = DataHolder.summoner.nameBeauty
         root.findViewById<TextView>(R.id.txtSumLvl).text =
             "Level ${DataHolder.summoner.level}"
@@ -44,22 +56,27 @@ class SummaryFragment : Fragment() {
 
         // Primary champion play rate bar
         root.findViewById<ProgressBar>(R.id.progPrimary).progress = DataHolder.getPrimaryChampionRate()
-        root.findViewById<ProgressBar>(R.id.progPrimary).setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.played)));
+        root.findViewById<ProgressBar>(R.id.progPrimary).setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.played)))
+        root.findViewById<TextView>(R.id.txtSumPrimaryPick).text = "${DataHolder.getPrimaryChampionRate()}%"
 
         // Primary champion win rate bar
-        root.findViewById<ProgressBar>(R.id.progPrimaryWin).progress = DataHolder.getPrimaryChampionRate()
-        root.findViewById<ProgressBar>(R.id.progPrimaryWin).setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.winColor)));
+        root.findViewById<ProgressBar>(R.id.progPrimaryWin).progress = DataHolder.getPrimaryChampionWinRate()
+        root.findViewById<ProgressBar>(R.id.progPrimaryWin).setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.winColor)))
+        root.findViewById<TextView>(R.id.txtSumPrimaryWin).text = "${DataHolder.getPrimaryChampionWinRate()}% won"
 
 
         // Secondary champion play rate bar
         root.findViewById<ProgressBar>(R.id.progSecondary).progress = DataHolder.getSecondaryChampionRate()
-        root.findViewById<ProgressBar>(R.id.progSecondary).setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.played)));
+        root.findViewById<ProgressBar>(R.id.progSecondary).setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.played)))
+        root.findViewById<TextView>(R.id.txtSumSecondaryPick).text = "${DataHolder.getSecondaryChampionRate()}%"
 
         // Secondary champion win rate bar
-        root.findViewById<ProgressBar>(R.id.progSecondaryWin).progress = DataHolder.getPrimaryChampionRate()
-        root.findViewById<ProgressBar>(R.id.progSecondaryWin).setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.winColor)));
+        root.findViewById<ProgressBar>(R.id.progSecondaryWin).progress = DataHolder.getSecondaryChampionWinRate()
+        root.findViewById<ProgressBar>(R.id.progSecondaryWin).setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.winColor)))
+        root.findViewById<TextView>(R.id.txtSumSecondaryWin).text = "${DataHolder.getSecondaryChampionWinRate()}% won"
 
 
+        // Ranking Solo/Duo
         root.findViewById<TextView>(R.id.txtSumRankedSolo).text = DataHolder.summoner.solo.tier
         if(!DataHolder.summoner.solo.rank.isEmpty()) {
             root.findViewById<TextView>(R.id.txtSumRankedSoloPoints).text = "${DataHolder.summoner.solo.leaguePoints} LP"
@@ -69,6 +86,7 @@ class SummaryFragment : Fragment() {
         root.findViewById<ConstraintLayout>(R.id.constraintLayoutSumSolo).background =
             ColorDrawable(ContextCompat.getColor(context!!, getRankColor(DataHolder.summoner.solo.tier)))
 
+        // Ranking Flex
         root.findViewById<TextView>(R.id.txtSumRankedFlex).text = DataHolder.summoner.flex.tier
         if(!DataHolder.summoner.flex.rank.isEmpty()) {
             root.findViewById<TextView>(R.id.txtSumRankedFlexPoints).text = "${DataHolder.summoner.flex.leaguePoints} LP"
@@ -77,8 +95,6 @@ class SummaryFragment : Fragment() {
         }
         root.findViewById<ConstraintLayout>(R.id.constraintLayoutSumFlex).background =
             ColorDrawable(ContextCompat.getColor(context!!, getRankColor(DataHolder.summoner.flex.tier)))
-
-        return root
     }
 
     fun getRankColor(rank: String) : Int {

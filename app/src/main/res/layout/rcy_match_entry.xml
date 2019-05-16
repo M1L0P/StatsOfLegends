@@ -40,7 +40,7 @@
                 android:id="@+id/txtKDA"
                 android:layout_marginTop="8dp"
                 app:layout_constraintTop_toTopOf="parent" android:textSize="25dp"
-                app:layout_constraintStart_toEndOf="@+id/txtChampionName" android:layout_marginStart="16dp"/>
+                app:layout_constraintStart_toEndOf="@+id/txtChampionName" android:layout_marginStart="7dp"/>
         <TextView
                 android:text="kda"
                 android:layout_width="wrap_content"

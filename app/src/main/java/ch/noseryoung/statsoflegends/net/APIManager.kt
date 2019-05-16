@@ -12,6 +12,15 @@ import org.json.JSONObject
 object APIManager {
 
     fun fetch(context: Context, name: String) : Boolean {
+        // Kill all running threads
+        for(thread in DataHolder.threadList) {
+            if(thread.isAlive) {
+                thread.interrupt()
+                thread.join()
+            }
+            DataHolder.threadList.remove(thread)
+        }
+
         // Clear existing data
         DataHolder.clear()
 
@@ -24,8 +33,12 @@ object APIManager {
                 "https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/$name"
             )
         })
+        DataHolder.threadList.add(nameGetter)
         nameGetter.start()
-        nameGetter.join()
+        try {
+            nameGetter.join()
+        } catch (ex: InterruptedException) {}
+
 
         // Check if summoner exists
         try {
@@ -39,7 +52,7 @@ object APIManager {
         }
 
         // Get all data
-        Thread(Runnable {
+        val accountGetter = Thread(Runnable {
             val summonerGetter = Thread(Runnable {
                 try {
                     DataHolder.summoner.accountId = json["accountId"].toString()
@@ -50,13 +63,18 @@ object APIManager {
                     getRanks()
                 } catch (ex: JSONException) {}
             })
+            DataHolder.threadList.add(summonerGetter)
             summonerGetter.start()
             summonerGetter.join()
 
-            Thread(Runnable {
+            val matchGetter = Thread(Runnable {
                 loadMatches(context)
-            }).start()
-        }).start()
+            })
+            DataHolder.threadList.add(matchGetter)
+            matchGetter.start()
+        })
+        DataHolder.threadList.add(accountGetter)
+        accountGetter.start()
 
         return true
     }
@@ -70,7 +88,7 @@ object APIManager {
 
         var success = true
 
-        val nameGetter = Thread(Runnable {
+        val thread = Thread(Runnable {
             val response = HTTPManager.get(
                 "https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${DataHolder.summoner.summonerId}")
             if(response == null) {
@@ -104,8 +122,11 @@ object APIManager {
                 return@Runnable
             }
         })
-        nameGetter.start()
-        nameGetter.join()
+        DataHolder.threadList.add(thread)
+        thread.start()
+        try {
+            thread.join()
+        } catch (ex: InterruptedException) {}
 
         return success
     }
@@ -120,7 +141,7 @@ object APIManager {
 
         var success = true
 
-        val nameGetter = Thread(Runnable {
+        val thread = Thread(Runnable {
             val response = HTTPManager.get(
                 "https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${accountId}?endIndex=20")
             val json = JSONObject(response)
@@ -140,8 +161,11 @@ object APIManager {
                 return@Runnable
             }
         })
-        nameGetter.start()
-        nameGetter.join()
+        DataHolder.threadList.add(thread)
+        thread.start()
+        try {
+            thread.join()
+        } catch (ex: InterruptedException) {}
 
         return success
     }
@@ -149,7 +173,7 @@ object APIManager {
 
     private fun getMatch(context: Context, matchID: String): Match? {
         var returnVal: Match? = null
-        val nameGetter = Thread(Runnable {
+        val thread = Thread(Runnable {
             val response = HTTPManager.get(
                 "https://euw1.api.riotgames.com/lol/match/v4/matches/${matchID}")
             if(response == null) {
@@ -158,8 +182,12 @@ object APIManager {
             }
             returnVal = MatchFactory.generate(context, DataHolder.summoner.accountId, response)
         })
-        nameGetter.start()
-        nameGetter.join()
+        DataHolder.threadList.add(thread)
+        thread.start()
+        try {
+            thread.join()
+        } catch (ex: InterruptedException) {}
+
 
         return returnVal
     }

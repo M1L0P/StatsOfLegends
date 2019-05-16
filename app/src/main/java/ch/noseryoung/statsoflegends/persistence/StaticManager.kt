@@ -88,7 +88,7 @@ object StaticManager {
                 }
 
                 override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
-                    Log.e("MilooliM", "Successfully get bitmap at ${context.getString(R.string.url_static).replace("{}", url)}")
+                    //Log.e("MilooliM", "Successfully get bitmap at ${context.getString(R.string.url_static).replace("{}", url)}")
                     bmp = bitmap
                 }
             })
