@@ -3,6 +3,8 @@ package ch.noseryoung.statsoflegends
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.util.IntProperty
 import android.util.Log
@@ -17,10 +19,15 @@ import ch.noseryoung.statsoflegends.data.DataHolder
 import ch.noseryoung.statsoflegends.persistence.StaticManager
 import kotlinx.android.synthetic.main.fragment_summary.*
 import android.util.DisplayMetrics
+import android.widget.ProgressBar
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
+import ch.noseryoung.statsoflegends.components.MatchHistoryAdapter
 import kotlin.math.roundToInt
 
 
 class SummaryFragment : Fragment() {
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_summary, container, false)
 
@@ -35,31 +42,65 @@ class SummaryFragment : Fragment() {
         root.findViewById<ImageView>(R.id.imgSumC2).setImageBitmap(
             StaticManager.getChampionIcon(context!!, DataHolder.getSecondaryChampion()))
 
-        //root.findViewById<TextView>(R.id.txtC1Games).text =
-        //    "${DataHolder.getPrimaryChampionRate()}%"
-        root.findViewById<TextView>(R.id.txtC2Games).text =
-            "${DataHolder.getSecondaryChampionRate()}%"
+        // Primary champion play rate bar
+        root.findViewById<ProgressBar>(R.id.progPrimary).progress = DataHolder.getPrimaryChampionRate()
+        root.findViewById<ProgressBar>(R.id.progPrimary).setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.played)));
+
+        // Primary champion win rate bar
+        root.findViewById<ProgressBar>(R.id.progPrimaryWin).progress = DataHolder.getPrimaryChampionRate()
+        root.findViewById<ProgressBar>(R.id.progPrimaryWin).setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.winColor)));
+
+
+        // Secondary champion play rate bar
+        root.findViewById<ProgressBar>(R.id.progSecondary).progress = DataHolder.getSecondaryChampionRate()
+        root.findViewById<ProgressBar>(R.id.progSecondary).setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.played)));
+
+        // Secondary champion win rate bar
+        root.findViewById<ProgressBar>(R.id.progSecondaryWin).progress = DataHolder.getPrimaryChampionRate()
+        root.findViewById<ProgressBar>(R.id.progSecondaryWin).setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.winColor)));
+
+
+        root.findViewById<TextView>(R.id.txtSumRankedSolo).text = DataHolder.summoner.solo.tier
+        if(!DataHolder.summoner.solo.rank.isEmpty()) {
+            root.findViewById<TextView>(R.id.txtSumRankedSoloPoints).text = "${DataHolder.summoner.solo.leaguePoints} LP"
+        } else {
+            root.findViewById<TextView>(R.id.txtSumRankedSoloPoints).visibility = View.GONE
+        }
+        root.findViewById<ConstraintLayout>(R.id.constraintLayoutSumSolo).background =
+            ColorDrawable(ContextCompat.getColor(context!!, getRankColor(DataHolder.summoner.solo.tier)))
+
+        root.findViewById<TextView>(R.id.txtSumRankedFlex).text = DataHolder.summoner.flex.tier
+        if(!DataHolder.summoner.flex.rank.isEmpty()) {
+            root.findViewById<TextView>(R.id.txtSumRankedFlexPoints).text = "${DataHolder.summoner.flex.leaguePoints} LP"
+        } else {
+            root.findViewById<TextView>(R.id.txtSumRankedFlexPoints).visibility = View.GONE
+        }
+        root.findViewById<ConstraintLayout>(R.id.constraintLayoutSumFlex).background =
+            ColorDrawable(ContextCompat.getColor(context!!, getRankColor(DataHolder.summoner.flex.tier)))
 
         return root
     }
 
+    fun getRankColor(rank: String) : Int {
+        Log.e("MilooliM", "Rank: "+rank)
+        when(rank.toLowerCase()) {
+            "iron" -> return R.color.ironElo
+            "bronze" -> return R.color.bronzeElo
+            "silver" -> return R.color.silverElo
+            "gold" -> return R.color.goldElo
+            "platin" -> return R.color.platElo
+            "diamond" -> return R.color.diamondElo
+            "master" -> return R.color.masterElo
+            "grandmaster" -> return R.color.graMasterElo
+            "challenger" -> return R.color.challengerElo
+            else -> return R.color.unrankedElo
+        }
+    }
+
+
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onResume() {
         super.onResume()
-
-        val fullWidth = constraintLayout3.measuredWidth
-
-        Log.e("MilooliM", "Measured: "+fullWidth)
-        Log.e("MilooliM", "C1: "+fullWidth.div(100).times(DataHolder.getPrimaryChampionRate()))
-        Log.e("MilooliM", "C2: "+fullWidth.div(100).times(DataHolder.getSecondaryChampionRate()))
-
-
-        progPrimary.progress = DataHolder.getPrimaryChampionRate()
-
-        progPrimary.getProgressDrawable().setColorFilter(
-            Color.BLUE, PorterDuff.Mode.SRC_IN);
-
-        progPrimary.setProgressTintList(ColorStateList.valueOf(Color.RED));
-
-        progPrimary.scaleY = 10f
     }
 }

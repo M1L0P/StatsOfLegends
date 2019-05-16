@@ -11,11 +11,12 @@
 
     <color name="ironElo">#757575</color>
     <color name="bronzeElo">#795548</color>
-    <color name="SilverElo">#e0e0e0</color>
-    <color name="GoldElo">#FFC400</color>
-    <color name="PlatElo">#00897b</color>
-    <color name="DiamondElo">#26c6da</color>
-    <color name="MasterElo">#673AB7</color>
-    <color name="GraMasterElo">#c62828</color>
-    <color name="ChallengerElo">#ec407a</color>
+    <color name="silverElo">#e0e0e0</color>
+    <color name="goldElo">#FFC400</color>
+    <color name="platElo">#00897b</color>
+    <color name="diamondElo">#26c6da</color>
+    <color name="masterElo">#673AB7</color>
+    <color name="graMasterElo">#c62828</color>
+    <color name="challengerElo">#ec407a</color>
+    <color name="unrankedElo">#CECDCD</color>
 </resources>

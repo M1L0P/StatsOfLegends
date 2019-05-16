@@ -21,7 +21,7 @@ class MatchHistoryFragment : Fragment() {
         root.findViewById<RecyclerView>(R.id.rcyHistory).adapter = MatchHistoryAdapter(context!!, DataHolder.matchHistory)
         root.findViewById<RecyclerView>(R.id.rcyHistory).layoutManager = LinearLayoutManager(context)
 
-        DataHolder.matchHistory.setOnChange(Runnable {
+        DataHolder.matchHistory.addOnChange(Runnable {
             activity?.runOnUiThread {
                 (root.findViewById<RecyclerView>(R.id.rcyHistory).adapter as MatchHistoryAdapter).notifyDataSetChanged()
             }

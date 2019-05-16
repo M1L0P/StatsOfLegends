@@ -3,10 +3,10 @@ package ch.noseryoung.statsoflegends.domain
 class MatchHistory (private var matches: ArrayList<Match> = ArrayList()) {
 
     private var matchIds: HashSet<String> = HashSet()
-    private var onChange: Runnable? = null
+    private var onChangeList: ArrayList<Runnable> = ArrayList()
 
-    fun setOnChange(onChange: Runnable) {
-        this.onChange = onChange
+    fun addOnChange(onChange: Runnable) {
+        this.onChangeList.add(onChange)
     }
 
     fun addMatch(match: Match) {
@@ -14,8 +14,8 @@ class MatchHistory (private var matches: ArrayList<Match> = ArrayList()) {
             matchIds.add(match.matchId)
             matches.add(match)
 
-            if(this.onChange != null) {
-                this.onChange?.run()
+            for(onChange in onChangeList) {
+                onChange.run()
             }
         }
     }

@@ -79,15 +79,23 @@ object APIManager {
             }
 
             val json = JSONArray(response)
+            if(json.length() == 0) {
+                Log.d("MilooliM", "Unranked player found: "+DataHolder.summoner.name)
+                DataHolder.summoner.solo.tier = "Unranked"
+                DataHolder.summoner.flex.tier = "Unranked"
+                return@Runnable
+            }
             try {
                 for(i: Int in 0..json.length()) {
                     val obj = json[i] as JSONObject
                     if(obj["queueType"].toString().contains("RANKED_SOLO")) {
-                        DataHolder.summoner.solo.rank = obj["queueType"].toString()
+                        DataHolder.summoner.solo.rank = obj["rank"].toString()
                         DataHolder.summoner.solo.tier = obj["tier"].toString()
+                        DataHolder.summoner.solo.leaguePoints = obj["leaguePoints"].toString()
                     } else if (obj["queueType"].toString().contains("RANKED_FLEX")) {
-                        DataHolder.summoner.flex.rank = obj["queueType"].toString()
+                        DataHolder.summoner.flex.rank = obj["rank"].toString()
                         DataHolder.summoner.flex.tier = obj["tier"].toString()
+                        DataHolder.summoner.flex.leaguePoints = obj["leaguePoints"].toString()
                     }
                 }
             } catch (ex: JSONException) {
@@ -114,7 +122,7 @@ object APIManager {
 
         val nameGetter = Thread(Runnable {
             val response = HTTPManager.get(
-                "https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${accountId}?endIndex=10")
+                "https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${accountId}?endIndex=20")
             val json = JSONObject(response)
             try {
                 for (i in 0 until (json["matches"] as JSONArray).length()) {

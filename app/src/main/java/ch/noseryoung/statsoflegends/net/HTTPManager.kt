@@ -2,7 +2,6 @@ package ch.noseryoung.statsoflegends.net
 
 import android.content.Context
 import android.util.Log
-import ch.noseryoung.statsoflegends.R
 import ch.noseryoung.statsoflegends.persistence.FileManager
 import com.squareup.okhttp.Callback
 import com.squareup.okhttp.Request
@@ -17,7 +16,7 @@ object HTTPManager {
     fun get(url: String): String? {
         val request = Request.Builder()
             .url(url)
-            .header("X-Riot-Token", "RGAPI-d00f5c70-bc62-4869-b884-3e2d34d5d951")
+            .header("X-Riot-Token", "RGAPI-8893c80c-65f0-4ccc-a979-8a6526ea0826")
             .build()
 
         return client.newCall(request).execute().body().string()
