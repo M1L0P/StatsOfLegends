@@ -38,7 +38,7 @@ object HTTPManager {
                     Log.e("Failed to get map", map)
                     return
                 }
-                FileManager.write(context, context.resources.getString(mapLocalId), response.body().string())
+                FileManager(context).write(context.resources.getString(mapLocalId), response.body().string())
             }
         })
     }

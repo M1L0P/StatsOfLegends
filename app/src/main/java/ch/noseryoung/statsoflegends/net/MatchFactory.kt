@@ -14,6 +14,13 @@ import org.json.JSONObject
 
 object MatchFactory {
 
+    /**
+     * Generates a Match from the API json response
+     * @param context Android context
+     * @param accountId Player acccount ID
+     * @param jsonString Json response from API
+     * @return Match object generated form the json
+     */
     fun generate(context: Context, accountId: String, jsonString: String) : Match {
         val json = JSONObject(jsonString)
 
@@ -24,8 +31,8 @@ object MatchFactory {
         for(i in 0 until participantIds.length()) {
             val player = (participantIds[i] as JSONObject)["player"] as JSONObject
 
-            Log.e("MilooliM", "ID: "+player["accountId"].toString().toLowerCase())
-            Log.e("MilooliM", "AccountID: "+accountId.toLowerCase())
+            Log.d("MilooliM", "ID: "+player["accountId"].toString().toLowerCase())
+            Log.d("MilooliM", "AccountID: "+accountId.toLowerCase())
 
             if(player["accountId"].toString().toLowerCase() == accountId.toLowerCase()) {
                 participantId = (participantIds[i] as JSONObject)["participantId"].toString()
@@ -54,11 +61,11 @@ object MatchFactory {
 
         val stats = participant["stats"] as JSONObject
 
-        Log.e("MilooliM", "ChampID: ${participant["championId"]}")
+        Log.d("MilooliM", "ChampID: ${participant["championId"]}")
 
         val championId = getNameByIdFromMap(context, participant["championId"].toString(), R.string.local_champmap)
 
-        Log.e("MilooliM", "Champ Name: ${championId}")
+        Log.d("MilooliM", "Champ Name: ${championId}")
 
         val kda = Kda(
             stats["kills"] as Int,
@@ -85,7 +92,7 @@ object MatchFactory {
     }
 
     private fun getNameByIdFromMap(context: Context, id: String, mapId: Int) : String {
-        val map = FileManager.read(context, context.getString(mapId))
+        val map = FileManager(context).read(context.getString(mapId))
 
         val data = JSONObject(map)["data"] as JSONObject
 

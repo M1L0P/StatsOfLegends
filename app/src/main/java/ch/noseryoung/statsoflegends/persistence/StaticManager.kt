@@ -114,7 +114,7 @@ object StaticManager {
     }
 
     private fun getLocal(context: Context, file: String) : Bitmap? {
-        return BitmapFactory.decodeStream(BufferedInputStream(FileManager.readRaw(context, file)))
+        return BitmapFactory.decodeStream(BufferedInputStream(FileManager(context).readRaw(file)))
     }
 
     private fun persist(context: Context, path: String, bitmap: Bitmap) {

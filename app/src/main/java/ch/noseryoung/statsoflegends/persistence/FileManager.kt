@@ -1,23 +1,32 @@
 package ch.noseryoung.statsoflegends.persistence
 
 import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
+import java.io.BufferedReader
 import java.io.FileInputStream
+import java.io.FileReader
+import java.util.stream.Collectors
 
 
-object FileManager {
+open class FileManager(val context: Context) {
 
-    fun write(context: Context, file: String, content: String) {
+    fun write(file: String, content: String) {
         context.openFileOutput(file, Context.MODE_PRIVATE).use {
             it.write(content.toByteArray())
         }
     }
 
-    fun read(context: Context, file: String) : String? {
-        return context.openFileInput(file).bufferedReader().readLines().joinToString("\n")
+    fun read(file: String) : String? {
+        val openFileInput = context.openFileInput(file)
+        val bufferedReader = openFileInput.bufferedReader()
+        val readLines = bufferedReader.readLines()
+        val joinToString = readLines.joinToString("\n")
+        return joinToString
     }
 
 
-    fun readRaw(context: Context, file: String): FileInputStream? {
+    fun readRaw(file: String): FileInputStream? {
         return context.openFileInput(file)
     }
 }

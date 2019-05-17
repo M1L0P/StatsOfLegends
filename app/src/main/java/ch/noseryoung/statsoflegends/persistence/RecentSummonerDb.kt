@@ -5,7 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-// Singleton to handle db requests
+/*
+  * Singleton to handle db requests
+  */
 @Database(entities = arrayOf(RecentSummonerData::class), version = 1)
 abstract class RecentSummonerDb : RoomDatabase() {
 

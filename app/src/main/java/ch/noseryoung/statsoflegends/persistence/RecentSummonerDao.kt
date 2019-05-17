@@ -4,6 +4,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 
+/*
+ * Dao object for communication with the database
+ */
 @Dao
 interface RecentSummonerDao {
     @Query("SELECT id, summonerName, region FROM RecentSummonerData")
