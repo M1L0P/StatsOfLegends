@@ -11,6 +11,18 @@ import org.json.JSONObject
 
 object APIManager {
 
+    /**
+     * Fetch all data from the endpoints
+     *
+     * Returns true if the searched summoner was found and
+     * continues getting everything in the background.
+     * If the summoner name was not found, the function
+     * returns false and no background threads will be started.
+     *
+     * @param context Context to use
+     * @param name Name of the summoner
+     * @return Boolean, if the summoner name was found
+     */
     fun fetch(context: Context, name: String) : Boolean {
         // Kill all running threads
         for(thread in DataHolder.threadList) {
@@ -27,6 +39,7 @@ object APIManager {
         var response: String? = null
         val json: JSONObject
 
+        // Get the summoner json
         DataHolder.summoner.name = name
         val nameGetter = Thread(Runnable {
             response = HTTPManager.get(
@@ -51,7 +64,7 @@ object APIManager {
             return false
         }
 
-        // Get all data
+        // Summoner exists, proceed to get all data
         val accountGetter = Thread(Runnable {
             val summonerGetter = Thread(Runnable {
                 try {
@@ -79,14 +92,15 @@ object APIManager {
         return true
     }
 
-    private fun getRanks() : Boolean {
+    /**
+     * Load the ranks (solo/duo and flex) of a summoner
+     */
+    private fun getRanks() {
         val accountId = DataHolder.summoner.accountId
         if(accountId.isEmpty()) {
             Log.e("MilooliM", "Failed to get match IDs (Account null)")
-            return false
+            return
         }
-
-        var success = true
 
         val thread = Thread(Runnable {
             val response = HTTPManager.get(
@@ -118,7 +132,6 @@ object APIManager {
                 }
             } catch (ex: JSONException) {
                 Log.e("MilooliM", "Failed to get rank details")
-                success = false
                 return@Runnable
             }
         })
@@ -127,19 +140,22 @@ object APIManager {
         try {
             thread.join()
         } catch (ex: InterruptedException) {}
-
-        return success
     }
 
-    private fun loadMatches(context: Context) : Boolean {
+    /**
+     * Load the matches from a specific summoner
+     *
+     * The summoner account ID is obtained through the global data holder
+     *
+     * @context Context from where the function is called
+     */
+    private fun loadMatches(context: Context) {
         val accountId = DataHolder.summoner.accountId
         Log.e("MilooliM", "Initial account ID: "+DataHolder.summoner.accountId)
         if(accountId.isEmpty()) {
             Log.e("MilooliM", "Failed to get match IDs (Account null)")
-            return false
+            return
         }
-
-        var success = true
 
         val thread = Thread(Runnable {
             val response = HTTPManager.get(
@@ -157,7 +173,6 @@ object APIManager {
                 }
             } catch (ex: JSONException) {
                 Log.e("MilooliM", "Failed to get match")
-                success = false
                 return@Runnable
             }
         })
@@ -166,11 +181,16 @@ object APIManager {
         try {
             thread.join()
         } catch (ex: InterruptedException) {}
-
-        return success
     }
 
 
+    /**
+     * Get details of one match
+     *
+     * @param context Context from which the function was called
+     * @param matchID Match ID to use while fetching information
+     * @return A filled out match object
+     */
     private fun getMatch(context: Context, matchID: String): Match? {
         var returnVal: Match? = null
         val thread = Thread(Runnable {

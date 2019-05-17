@@ -13,7 +13,7 @@ import ch.noseryoung.statsoflegends.domain.MatchHistory
 import ch.noseryoung.statsoflegends.persistence.StaticManager
 import kotlin.math.roundToInt
 import android.graphics.drawable.BitmapDrawable
-
+import androidx.core.content.ContextCompat
 
 
 class MatchHistoryAdapter(private val context: Context, private var data: MatchHistory) :
@@ -38,7 +38,6 @@ class MatchHistoryAdapter(private val context: Context, private var data: MatchH
         holder.txtGameType.text = match.gameType
         holder.txtChampionName.text = match.championName
 
-
         // Images
         holder.imgChamp.setImageBitmap(StaticManager.getChampionIcon(context, match.championName))
         holder.imgItem1.setImageBitmap(StaticManager.getItemIcon(context, match.itemID[0]))
@@ -52,6 +51,12 @@ class MatchHistoryAdapter(private val context: Context, private var data: MatchH
         holder.imgSum2.setImageBitmap(StaticManager.getSpellIcon(context, match.summonerSpellIDs.second))
 
         holder.background.setImageBitmap(StaticManager.getChampionSplash(context, match.championName))
+
+        if(match.won) {
+            holder.winLose.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.win_triangle))
+        } else {
+            holder.winLose.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.loose_triangle))
+        }
 
     }
 
@@ -72,5 +77,6 @@ class MatchHistoryAdapter(private val context: Context, private var data: MatchH
         var txtGameType: TextView = itemView.findViewById(R.id.txtGameType)
         var txtChampionName: TextView = itemView.findViewById(R.id.txtChampionName)
         var background: ImageView = itemView.findViewById(R.id.imgBackground)
+        var winLose: ImageView = itemView.findViewById(R.id.imgWinLoose)
     }
 }

@@ -127,6 +127,14 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:progress="60" android:scaleY="12"
                     android:background="@color/looseColor"/>
+            <TextView
+                    android:text="Win rate in %"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/txtSumWin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/progWon"
+                    app:layout_constraintTop_toTopOf="@+id/progWon"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
@@ -161,7 +169,7 @@
                         android:progress="20" android:scaleY="12"
                         android:background="@color/looseColor"/>
                 <TextView
-                        android:text="Win rate in %"
+                        android:text="Champion win rate in %"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/txtSumPrimaryWin"
                         app:layout_constraintStart_toStartOf="parent"
@@ -188,7 +196,7 @@
                         android:progress="50" android:scaleY="12"
                         android:background="@color/notPlayed"/>
                 <TextView
-                        android:text="Pick rate in %"
+                        android:text="Champion pick rate in %"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/txtSumPrimaryPick"
                         app:layout_constraintStart_toStartOf="parent"
@@ -232,7 +240,7 @@
                         android:progress="80" android:scaleY="12"
                         android:background="@color/looseColor"/>
                 <TextView
-                        android:text="Win rate in %"
+                        android:text="Champion win rate in %"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/txtSumSecondaryWin"
                         app:layout_constraintStart_toStartOf="parent"
@@ -260,7 +268,7 @@
                         android:progress="40" android:scaleY="12"
                         android:background="@color/notPlayed"/>
                 <TextView
-                        android:text="Pick rate in %"
+                        android:text="Champion pick rate in %"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/txtSumSecondaryPick"
                         app:layout_constraintStart_toStartOf="parent"

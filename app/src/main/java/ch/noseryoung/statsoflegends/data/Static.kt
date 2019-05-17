@@ -1,5 +1,6 @@
 package ch.noseryoung.statsoflegends.data
 
+// Game types key value by game ID
 val gameTypes = mapOf(
     Pair(400, "Draft Pick"),
     Pair(420, "Ranked S/D"),
@@ -13,6 +14,7 @@ val gameTypes = mapOf(
     Pair(850, "Co-op vs. AI")
 )
 
+// Servers key value by server name
 val servers = mapOf(
     Pair("NA", "NA1"),
     Pair("EUW", "EUW1"),

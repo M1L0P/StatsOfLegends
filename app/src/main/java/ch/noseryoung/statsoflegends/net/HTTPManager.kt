@@ -11,17 +11,35 @@ import java.io.IOException
 
 object HTTPManager {
 
+    // OkHTTP client to use during requests
     var client = OkHttpClient()
 
+    /**
+     * Perform a GET request to a given riot endpoint with API key in header
+     *
+     * This function has to be called outside the main thread
+     *
+     * @param url Full URL to the endpoint
+     * @return HTTP return
+     */
     fun get(url: String): String? {
         val request = Request.Builder()
             .url(url)
-            .header("X-Riot-Token", "RGAPI-8893c80c-65f0-4ccc-a979-8a6526ea0826")
+            .header("X-Riot-Token", "RGAPI-17dcd7fd-0bf4-46a7-bc81-691727e603ac")
             .build()
 
         return client.newCall(request).execute().body().string()
     }
 
+    /**
+     * Load a mapping from DDragon
+     *
+     * This function has to be called outside the main thread
+     *
+     * @context Context from which the function was called
+     * @mapUrlId ID of the map in url
+     * @mapLocalId ID of the map in local storage
+     */
     fun loadMapping(context: Context, mapUrlId: Int, mapLocalId: Int) {
         val map = context.resources.getString(mapUrlId)
         val request = Request.Builder()
