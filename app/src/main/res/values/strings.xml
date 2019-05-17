@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">StatsOfLegends</string>
+    <string name="title_search">Search</string>
+    <string name="title_history">History</string>
+    <string name="title_summary">Summary</string>
+    <string name="search_btn_history">History</string>
+    <string name="search_btn_summary">Summary</string>
+    <string name="search_title">Search for a Summoner</string>
+    <string name="search_txtinput_placeholder">Summoner name</string>
+
+    <string name="title_recent">Recent Searches</string>
+    <string name="recent_button">Search recent</string>
+
+    <string name="url_champmap">https://ddragon.leagueoflegends.com/cdn/8.24.1/data/en_US/champion.json</string>
+    <string name="local_champmap">champion_map.json</string>
+    <string name="url_spellmap">https://ddragon.leagueoflegends.com/cdn/8.24.1/data/en_US/summoner.json</string>
+    <string name="local_spellmap">spells_map.json</string>
+
+    <string name="url_static">https://ddragon.leagueoflegends.com/cdn/6.24.1/img/{}.png</string>
+    <string name="url_opgg">https://opgg-static.akamaized.net/images/lol/{}.png</string>
+    <string name="url_profile_icon">https://opgg-static.akamaized.net/images/profile_icons/profileIcon{}.jpg</string>
+    <string name="url_splash">https://ddragon.leagueoflegends.com/cdn/img/champion/splash/{}_0.jpg</string>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#673AB7</color>
+    <color name="colorPrimaryDark">#572A9E</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="background">#572A9E</color>
+
+    <color name="looseColor">#f48fb1</color>
+    <color name="winColor">#1e88e5</color>
+    <color name="played">#673AB7</color>
+    <color name="notPlayed">#d1c4e9</color>
+
+    <color name="ironElo">#757575</color>
+    <color name="bronzeElo">#795548</color>
+    <color name="silverElo">#e0e0e0</color>
+    <color name="goldElo">#FFC400</color>
+    <color name="platElo">#00897b</color>
+    <color name="diamondElo">#26c6da</color>
+    <color name="masterElo">#673AB7</color>
+    <color name="graMasterElo">#c62828</color>
+    <color name="challengerElo">#ec407a</color>
+    <color name="unrankedElo">#CECDCD</color>
+</resources>
