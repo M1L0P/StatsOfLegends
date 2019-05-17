@@ -16,7 +16,7 @@ object HTTPManager {
     fun get(url: String): String? {
         val request = Request.Builder()
             .url(url)
-            .header("X-Riot-Token", "RGAPI-8893c80c-65f0-4ccc-a979-8a6526ea0826")
+            .header("X-Riot-Token", "RGAPI-8da20512-cd2d-40e9-8d26-4da39d18cdd0")
             .build()
 
         return client.newCall(request).execute().body().string()

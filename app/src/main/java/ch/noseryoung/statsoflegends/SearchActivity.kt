@@ -16,7 +16,6 @@ import ch.noseryoung.statsoflegends.persistence.RecentSummonerData
 import ch.noseryoung.statsoflegends.persistence.RecentSummonerDb
 import kotlinx.android.synthetic.main.activity_search.*
 import android.widget.AdapterView
-import androidx.annotation.WorkerThread
 
 
 class SearchActivity : AppCompatActivity() {
@@ -69,11 +68,11 @@ class SearchActivity : AppCompatActivity() {
         setAsyncListViewAdapter()
     }
 
-    /*
-     *  is called after a search request was successful and persists the summoner to the db
+    /**
+     *  This function is called after a search request was successfully fired and persists the summoner to the db
      *
      *  Sends the recentSummoner as object in a Runnable to the ThreadHandler which then persists it
-      */
+     */
     private fun persistRecentSummoner(summonerName: String, region: String) {
         val summonerToPersist = RecentSummonerData(summonerName = summonerName, region = region)
 
