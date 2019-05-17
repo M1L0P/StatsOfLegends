@@ -86,7 +86,7 @@ object StaticManager {
     fun getProfileIcon(context: Context, id: String) : Bitmap? {
         if(existsLocal("profileicon_$id.png")) return getLocal(context, "profileicon_$id.png")
         else {
-            val bitmap = getOnline(context, "profileicon/$id")
+            val bitmap = getOnline(context, id, R.string.url_profile_icon)
             if(bitmap != null) persist(context, "profileicon_$id.png", bitmap)
             return bitmap
         }
@@ -125,16 +125,18 @@ object StaticManager {
      * Get an image online via the picasso library
      *
      * @param context Context from which the function gets called
+     * @param id ID of the image to get
+     * @param urlID ID of the url string
      * @return Bitmap image, if image was not found null
      */
-    private fun getOnline(context: Context, url: String) : Bitmap? {
+    private fun getOnline(context: Context, id: String, urlId: Int = R.string.url_opgg) : Bitmap? {
         var bmp: Bitmap? = null
         Picasso.with(context)
-            .load(context.getString(R.string.url_opgg).replace("{}", url))
+            .load(context.getString(urlId).replace("{}", id))
             .into(object : Target {
                 override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
                 override fun onBitmapFailed(errorDrawable: Drawable?) {
-                    Log.e("MilooliM", "Failed to get bitmap at ${context.getString(R.string.url_static).replace("{}", url)}")
+                    Log.e("MilooliM", "Failed to get bitmap at ${context.getString(R.string.url_static).replace("{}", id)}")
                 }
 
                 override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
