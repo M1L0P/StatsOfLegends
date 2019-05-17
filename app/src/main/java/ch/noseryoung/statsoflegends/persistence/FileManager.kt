@@ -11,7 +11,7 @@ import java.util.stream.Collectors
 /**
  * File manager class to access local storage files
  */
-object FileManager {
+class FileManager(val context: Context) {
 
     /**
      * Write to a file in the local storage
@@ -20,7 +20,7 @@ object FileManager {
      * @param file Path to the new file
      * @param content Content data of the file to write
      */
-    fun write(context: Context, file: String, content: String) {
+    fun write(file: String, content: String) {
         context.openFileOutput(file, Context.MODE_PRIVATE).use {
             it.write(content.toByteArray())
         }
@@ -33,7 +33,7 @@ object FileManager {
      * @param file Path to file to read
      * @return Content of the file, null if the file was not found
      */
-    fun read(context: Context, file: String) : String? {
+    fun read(file: String) : String? {
         return context.openFileInput(file).bufferedReader().readLines().joinToString("\n")
     }
 
@@ -44,7 +44,7 @@ object FileManager {
      * @param file Path to file to read
      * @return Open file stream to the file
      */
-    fun readRaw(context: Context, file: String): FileInputStream? {
+    fun readRaw(file: String): FileInputStream? {
         return context.openFileInput(file)
     }
 }

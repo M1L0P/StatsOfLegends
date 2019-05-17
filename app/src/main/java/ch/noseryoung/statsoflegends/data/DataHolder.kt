@@ -29,6 +29,11 @@ object DataHolder {
      * @return Overall win rate in %
      */
     fun getWinRate() : Int {
+        // Return directly 0 if there are no matches
+        if(matchHistory.getMatches().isEmpty()) {
+            return 0
+        }
+
         var won = 0
 
         for(match in matchHistory.getMatches()) {
@@ -44,7 +49,7 @@ object DataHolder {
      * @return Primary champion pick rate in %
      */
     fun getPrimaryChampionWinRate() : Int {
-        return getWinRate(getPrimaryChampion())
+        return getChampionWinRate(getPrimaryChampion())
     }
 
     /**
@@ -53,7 +58,7 @@ object DataHolder {
      * @return Secondary champion win rate in %
      */
     fun getSecondaryChampionWinRate() : Int {
-        return getWinRate(getSecondaryChampion())
+        return getChampionWinRate(getSecondaryChampion())
     }
 
     /**
@@ -81,9 +86,9 @@ object DataHolder {
      * @return Primary champion name
      */
     fun getPrimaryChampion() : String {
-        val secondaryList = championFrequencyList().toList()
-        if(secondaryList.isNotEmpty()) {
-            return secondaryList[0]
+        val primaryList = championFrequencyList().toList()
+        if(primaryList.isNotEmpty()) {
+            return primaryList[0]
         }
         return ""
     }
@@ -95,7 +100,7 @@ object DataHolder {
      */
     fun getSecondaryChampion(): String {
         val secondaryList = championFrequencyList().toList()
-        if(secondaryList.isNotEmpty()) {
+        if(secondaryList.size > 1) {
             return secondaryList[1]
         }
         return ""
@@ -106,7 +111,12 @@ object DataHolder {
      *
      * @return Win rate in %
      */
-    private fun getWinRate(champion: String) : Int {
+    private fun getChampionWinRate(champion: String) : Int {
+        // Return directly 0 if there are no matches
+        if(matchHistory.getMatches().isEmpty()) {
+            return 0
+        }
+
         var won = 0
         var played = 0
 
@@ -117,6 +127,10 @@ object DataHolder {
                     won++
                 }
             }
+        }
+
+        if(played < 1) {
+            return 0
         }
 
         return 100.div(played).times(won)
@@ -160,6 +174,11 @@ object DataHolder {
      * @return Pick rate of champion in match history
      */
     private fun championRate(champ: String) : Int {
+        // Return directly 0 if there are no matches
+        if(matchHistory.getMatches().isEmpty()) {
+            return 0
+        }
+
         var gamesWith = 0
         var gamesWithout = 0
 
@@ -171,6 +190,6 @@ object DataHolder {
 
         }
 
-        return 100f.div(gamesWith+gamesWithout).times(gamesWith).roundToInt()
+        return 100f.div(matchHistory.getMatches().size).times(gamesWith).roundToInt()
     }
 }

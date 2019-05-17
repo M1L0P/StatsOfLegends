@@ -118,7 +118,9 @@ class SearchActivity : AppCompatActivity() {
 
             // creates and sets the adapter for the ListView
             val adapter = ArrayAdapter<String>(this, R.layout.recent_list_entry, nameList.reversed())
-            listSearchRecent.adapter = adapter
+            listSearchRecent.post {
+                listSearchRecent.adapter = adapter
+            }
 
             // sets the onclickListener for the listSearch
             listSearchRecent.onItemClickListener =

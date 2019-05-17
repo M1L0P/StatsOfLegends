@@ -179,7 +179,7 @@ object StaticManager {
      */
     private fun getLocal(context: Context, file: String) : Bitmap? {
         return BitmapFactory.decodeStream(
-            BufferedInputStream(FileManager.readRaw(context, file)))
+            BufferedInputStream(FileManager(context).readRaw(file)))
     }
 
     /**
