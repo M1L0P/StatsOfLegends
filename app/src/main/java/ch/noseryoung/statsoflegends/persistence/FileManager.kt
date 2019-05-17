@@ -1,7 +1,12 @@
 package ch.noseryoung.statsoflegends.persistence
 
 import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
+import java.io.BufferedReader
 import java.io.FileInputStream
+import java.io.FileReader
+import java.util.stream.Collectors
 
 /**
  * File manager class to access local storage files

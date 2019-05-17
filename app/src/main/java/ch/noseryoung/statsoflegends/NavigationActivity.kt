@@ -35,6 +35,9 @@ class NavigationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_navigation)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
+        // Set the title of activity to current summoner name
+        this.title = DataHolder.summoner.nameBeauty
+
         navView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.navigation_search -> {

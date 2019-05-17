@@ -31,8 +31,8 @@ object MatchFactory {
         for(i in 0 until participantIds.length()) {
             val player = (participantIds[i] as JSONObject)["player"] as JSONObject
 
-            Log.e("MilooliM", "ID: "+player["accountId"].toString().toLowerCase())
-            Log.e("MilooliM", "AccountID: "+accountId.toLowerCase())
+            Log.d("MilooliM", "ID: "+player["accountId"].toString().toLowerCase())
+            Log.d("MilooliM", "AccountID: "+accountId.toLowerCase())
 
             if(player["accountId"].toString().toLowerCase() == accountId.toLowerCase()) {
                 participantId = (participantIds[i] as JSONObject)["participantId"].toString()
@@ -107,7 +107,7 @@ object MatchFactory {
      * @param mapId ID of the map to use to convert
      */
     private fun getNameByIdFromMap(context: Context, id: String, mapId: Int) : String {
-        val map = FileManager.read(context, context.getString(mapId))
+        val map = FileManager(context).read(context.getString(mapId))
 
         val data = JSONObject(map)["data"] as JSONObject
 

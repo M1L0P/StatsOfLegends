@@ -61,7 +61,7 @@ class SummaryFragment : Fragment() {
 
         // Primary champion win rate bar
         root.findViewById<ProgressBar>(R.id.progPrimaryWin).progress = DataHolder.getPrimaryChampionWinRate()
-        root.findViewById<ProgressBar>(R.id.progPrimaryWin).setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.winColor)))
+        root.findViewById<ProgressBar>(R.id.progPrimaryWin).progressTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.winColor))
         root.findViewById<TextView>(R.id.txtSumPrimaryWin).text = "${DataHolder.getPrimaryChampionWinRate()}% won"
 
 

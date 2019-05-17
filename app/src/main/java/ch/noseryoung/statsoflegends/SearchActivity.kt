@@ -16,7 +16,6 @@ import ch.noseryoung.statsoflegends.persistence.RecentSummonerData
 import ch.noseryoung.statsoflegends.persistence.RecentSummonerDb
 import kotlinx.android.synthetic.main.activity_search.*
 import android.widget.AdapterView
-import androidx.annotation.WorkerThread
 
 
 class SearchActivity : AppCompatActivity() {
@@ -69,7 +68,11 @@ class SearchActivity : AppCompatActivity() {
         setAsyncListViewAdapter()
     }
 
-    // is called after a search request was successful and persists the summoner to the db
+    /**
+     *  This function is called after a search request was successfully fired and persists the summoner to the db
+     *
+     *  Sends the recentSummoner as object in a Runnable to the ThreadHandler which then persists it
+     */
     private fun persistRecentSummoner(summonerName: String, region: String) {
         val summonerToPersist = RecentSummonerData(summonerName = summonerName, region = region)
 
@@ -92,7 +95,11 @@ class SearchActivity : AppCompatActivity() {
         dbThreadHandler.post(task)
     }
 
-    // loads persisted recently searched summoner names and load them into the listview
+    /*
+     * Loads the listview adapter for the recent search
+     *
+     * Puts the loading for the Listview into a Runable task and sends it to the Threadhandler
+     */
     private fun setAsyncListViewAdapter() {
         // runnable to post to ThreadHandler
         val task = Runnable {
@@ -121,7 +128,7 @@ class SearchActivity : AppCompatActivity() {
                 }
         }
 
-        // posts the task to the ThreadHandler
+        // posts the task to the ThreadHandler after chekcking if the looper is initialized
         dbThreadHandler.looper
         dbThreadHandler.post(task)
     }
