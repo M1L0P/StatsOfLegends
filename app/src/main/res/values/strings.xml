@@ -16,5 +16,8 @@
     <string name="url_spellmap">https://ddragon.leagueoflegends.com/cdn/8.24.1/data/en_US/summoner.json</string>
     <string name="local_spellmap">spells_map.json</string>
 
-    <string name="url_static">http://ddragon.leagueoflegends.com/cdn/6.24.1/img/{}.png</string>
+    <string name="url_static">https://ddragon.leagueoflegends.com/cdn/6.24.1/img/{}.png</string>
+    <string name="url_opgg">https://opgg-static.akamaized.net/images/lol/{}.png</string>
+    <string name="url_profile_icon">https://opgg-static.akamaized.net/images/profile_icons/profileIcon{}.jpg</string>
+    <string name="url_splash">https://ddragon.leagueoflegends.com/cdn/img/champion/splash/{}_0.jpg</string>
 </resources>

@@ -130,7 +130,7 @@ object StaticManager {
     private fun getOnline(context: Context, url: String) : Bitmap? {
         var bmp: Bitmap? = null
         Picasso.with(context)
-            .load(context.getString(R.string.url_static).replace("{}", url))
+            .load(context.getString(R.string.url_opgg).replace("{}", url))
             .into(object : Target {
                 override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
                 override fun onBitmapFailed(errorDrawable: Drawable?) {
@@ -163,7 +163,7 @@ object StaticManager {
                 }
 
                 override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
-                    Log.e("MilooliM", "Successfully get bitmap at ${context.getString(R.string.url_static).replace("{}", url)}")
+                    //Log.e("MilooliM", "Successfully get bitmap at ${context.getString(R.string.url_static).replace("{}", url)}")
                     bmp = bitmap
                 }
             })
