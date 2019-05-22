@@ -18,7 +18,7 @@ class RecentSummonerDbTest {
     private lateinit var recentSummonerDao: RecentSummonerDao
     private lateinit var db: RecentSummonerDb
 
-    @Rule
+    @get:Rule
     var mActivityRule = ActivityTestRule(
         MainActivity::class.java
     )

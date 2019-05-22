@@ -34,7 +34,7 @@ class NavigationActivityTest {
     private val name = "sirtubelujohnson"
     private val url = "https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/$name"
 
-    @Rule
+    @get:Rule
     var mActivityRule = ActivityTestRule(
         NavigationActivity::class.java
     )
