@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 /*
   * Singleton to handle db requests
   */
-@Database(entities = arrayOf(RecentSummonerData::class), version = 1)
+@Database(entities = [RecentSummonerData::class], version = 1)
 abstract class RecentSummonerDb : RoomDatabase() {
 
     abstract fun recentSummonerDao(): RecentSummonerDao
@@ -19,7 +19,7 @@ abstract class RecentSummonerDb : RoomDatabase() {
         fun getInstance(context: Context): RecentSummonerDb? {
             if (INSTANCE == null) {
                 synchronized(RecentSummonerDb::class) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                    INSTANCE = Room.databaseBuilder(context.applicationContext,
                         RecentSummonerDb::class.java, "recentSummoner.db")
                         .build()
                 }

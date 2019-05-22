@@ -4,12 +4,11 @@ import android.content.Context
 import android.util.Log
 import ch.noseryoung.statsoflegends.data.DataHolder
 import ch.noseryoung.statsoflegends.domain.Match
-import ch.noseryoung.statsoflegends.domain.Summoner
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
-object APIManager {
+class APIManager {
 
     /**
      * Fetch all data from the endpoints
@@ -42,7 +41,7 @@ object APIManager {
         // Get the summoner json
         DataHolder.summoner.name = name
         val nameGetter = Thread(Runnable {
-            response = HTTPManager.get(
+            response = HTTPManager().get(
                 "https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/$name"
             )
         })
@@ -103,7 +102,7 @@ object APIManager {
         }
 
         val thread = Thread(Runnable {
-            val response = HTTPManager.get(
+            val response = HTTPManager().get(
                 "https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${DataHolder.summoner.summonerId}")
             if(response == null) {
                 Log.e("MilooliM", "Failed to get rank details")
@@ -158,7 +157,7 @@ object APIManager {
         }
 
         val thread = Thread(Runnable {
-            val response = HTTPManager.get(
+            val response = HTTPManager().get(
                 "https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${accountId}?endIndex=20")
             val json = JSONObject(response)
             try {
@@ -194,7 +193,7 @@ object APIManager {
     private fun getMatch(context: Context, matchID: String): Match? {
         var returnVal: Match? = null
         val thread = Thread(Runnable {
-            val response = HTTPManager.get(
+            val response = HTTPManager().get(
                 "https://euw1.api.riotgames.com/lol/match/v4/matches/${matchID}")
             if(response == null) {
                 Log.e("MilooliM", "Failed to get match details")

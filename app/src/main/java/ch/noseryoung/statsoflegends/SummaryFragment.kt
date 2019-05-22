@@ -51,12 +51,14 @@ class SummaryFragment : Fragment() {
 
         // Win rate
         root.findViewById<ProgressBar>(R.id.progWon).progress = DataHolder.getWinRate()
-        root.findViewById<ProgressBar>(R.id.progWon).setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.winColor)))
+        root.findViewById<ProgressBar>(R.id.progWon).progressTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.winColor))
         root.findViewById<TextView>(R.id.txtSumWin).text = "${DataHolder.getWinRate()}% won"
 
         // Primary champion play rate bar
         root.findViewById<ProgressBar>(R.id.progPrimary).progress = DataHolder.getPrimaryChampionPickRate()
-        root.findViewById<ProgressBar>(R.id.progPrimary).setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.played)))
+        root.findViewById<ProgressBar>(R.id.progPrimary).progressTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.played))
         root.findViewById<TextView>(R.id.txtSumPrimaryPick).text = "${DataHolder.getPrimaryChampionPickRate()}% picked"
 
         // Primary champion win rate bar
@@ -67,12 +69,14 @@ class SummaryFragment : Fragment() {
 
         // Secondary champion play rate bar
         root.findViewById<ProgressBar>(R.id.progSecondary).progress = DataHolder.getSecondaryChampionPickRate()
-        root.findViewById<ProgressBar>(R.id.progSecondary).setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.played)))
+        root.findViewById<ProgressBar>(R.id.progSecondary).progressTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.played))
         root.findViewById<TextView>(R.id.txtSumSecondaryPick).text = "${DataHolder.getSecondaryChampionPickRate()}% picked"
 
         // Secondary champion win rate bar
         root.findViewById<ProgressBar>(R.id.progSecondaryWin).progress = DataHolder.getSecondaryChampionWinRate()
-        root.findViewById<ProgressBar>(R.id.progSecondaryWin).setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.winColor)))
+        root.findViewById<ProgressBar>(R.id.progSecondaryWin).progressTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.winColor))
         root.findViewById<TextView>(R.id.txtSumSecondaryWin).text = "${DataHolder.getSecondaryChampionWinRate()}% won"
 
 

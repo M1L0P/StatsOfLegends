@@ -62,11 +62,11 @@ class NavigationActivity : AppCompatActivity() {
         when (intent.extras.getInt("type")) {
             NavigationType.HISTORY.value -> {
                 loadMatchHistory()
-                nav_view.menu.get(1).setChecked(true)
+                nav_view.menu.get(1).isChecked = true
             }
             NavigationType.SUMMARY.value -> {
                 loadSummary()
-                nav_view.menu.get(2).setChecked(true)
+                nav_view.menu.get(2).isChecked = true
             }
         }
     }

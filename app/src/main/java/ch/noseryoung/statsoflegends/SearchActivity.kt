@@ -11,11 +11,11 @@ import androidx.appcompat.app.AppCompatActivity
 import ch.noseryoung.statsoflegends.data.DataHolder
 import ch.noseryoung.statsoflegends.data.servers
 import ch.noseryoung.statsoflegends.net.APIManager
-import ch.noseryoung.statsoflegends.net.HTTPManager.loadMapping
 import ch.noseryoung.statsoflegends.persistence.RecentSummonerData
 import ch.noseryoung.statsoflegends.persistence.RecentSummonerDb
 import kotlinx.android.synthetic.main.activity_search.*
 import android.widget.AdapterView
+import ch.noseryoung.statsoflegends.net.HTTPManager
 
 
 class SearchActivity : AppCompatActivity() {
@@ -50,16 +50,16 @@ class SearchActivity : AppCompatActivity() {
             startNavigation(NavigationType.HISTORY)
 
             // Get champion and spell mapping
-            loadMapping(this, R.string.url_champmap, R.string.local_champmap)
-            loadMapping(this, R.string.url_spellmap, R.string.local_spellmap)
+            HTTPManager().loadMapping(this, R.string.url_champmap, R.string.local_champmap)
+            HTTPManager().loadMapping(this, R.string.url_spellmap, R.string.local_spellmap)
         }
 
         btnSearchSummary.setOnClickListener {
             startNavigation(NavigationType.SUMMARY)
 
             // Get champion and spell mapping
-            loadMapping(this, R.string.url_champmap, R.string.local_champmap)
-            loadMapping(this, R.string.url_spellmap, R.string.local_spellmap)
+            HTTPManager().loadMapping(this, R.string.url_champmap, R.string.local_champmap)
+            HTTPManager().loadMapping(this, R.string.url_spellmap, R.string.local_spellmap)
         }
     }
 
@@ -148,7 +148,7 @@ class SearchActivity : AppCompatActivity() {
             var searchSuceeded = false
 
             val nameCheckThread = Thread(Runnable {
-                searchSuceeded = APIManager.fetch(this, summonerName)
+                searchSuceeded = APIManager().fetch(this, summonerName)
             })
 
             nameCheckThread.start()

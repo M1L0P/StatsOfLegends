@@ -1,12 +1,10 @@
 package ch.noseryoung.statsoflegends.net
 
 import android.content.Context
-import ch.noseryoung.statsoflegends.R
 import ch.noseryoung.statsoflegends.persistence.FileManager
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.runners.MockitoJUnitRunner
