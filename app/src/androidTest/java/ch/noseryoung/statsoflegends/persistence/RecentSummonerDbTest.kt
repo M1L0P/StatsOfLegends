@@ -2,7 +2,6 @@ package ch.noseryoung.statsoflegends.persistence
 
 import android.content.Context
 import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import androidx.test.rule.ActivityTestRule
@@ -27,7 +26,7 @@ class RecentSummonerDbTest {
 
     @Before
     fun createDb() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
+        val context = mActivityRule.activity.applicationContext
         db = Room.inMemoryDatabaseBuilder(
             context, RecentSummonerDb::class.java).build()
         recentSummonerDao = db.recentSummonerDao()
