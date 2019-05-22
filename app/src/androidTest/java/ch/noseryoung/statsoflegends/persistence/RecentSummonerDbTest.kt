@@ -5,6 +5,8 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
+import androidx.test.rule.ActivityTestRule
+import ch.noseryoung.statsoflegends.SearchActivity
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -20,7 +22,7 @@ class RecentSummonerDbTest {
 
     @Rule
     var mActivityRule = ActivityTestRule(
-        MainActivity::class.java
+        SearchActivity::class.java
     )
 
     @Before
