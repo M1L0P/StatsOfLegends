@@ -40,11 +40,26 @@ class RecentSummonerDbTest {
 
     @Test
     @Throws(Exception::class)
-    fun writeSummonerAndReadInList() {
-        val summoner: RecentSummonerData = RecentSummonerData(summonerName = "jeff", region = "EUW")
+    fun writeAndReadSummoner() {
+        val summoner: RecentSummonerData = RecentSummonerData(10, "jeff", "EUW")
         recentSummonerDao.insert(summoner)
         val returnedSummoner = recentSummonerDao.getAll()
 
-        assertThat(returnedSummoner[0], equalTo(summoner))
+        assertThat(returnedSummoner.first()  , equalTo(summoner))
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun deleteOldestSummoner() {
+        val summonerOld: RecentSummonerData = RecentSummonerData(10, "jeff", "EUW")
+        val summonerNew: RecentSummonerData = RecentSummonerData(11, "jeff", "EUW")
+        recentSummonerDao.insert(summonerOld)
+        recentSummonerDao.insert(summonerNew)
+
+        recentSummonerDao.deleteOldest()
+        val returnedSummoner = recentSummonerDao.getAll()
+
+        assertThat(returnedSummoner.first(), equalTo(summonerNew))
+        assertThat(returnedSummoner.size, equalTo(1))
     }
 }
