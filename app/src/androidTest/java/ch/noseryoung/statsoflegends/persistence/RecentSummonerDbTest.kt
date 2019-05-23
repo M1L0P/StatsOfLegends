@@ -6,6 +6,7 @@ import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import androidx.test.rule.ActivityTestRule
 import ch.noseryoung.statsoflegends.SearchActivity
+import org.junit.Assert.assertEquals
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
