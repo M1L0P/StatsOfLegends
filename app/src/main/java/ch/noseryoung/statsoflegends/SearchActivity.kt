@@ -2,8 +2,6 @@ package ch.noseryoung.statsoflegends
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.HandlerThread
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -11,19 +9,13 @@ import androidx.appcompat.app.AppCompatActivity
 import ch.noseryoung.statsoflegends.data.DataHolder
 import ch.noseryoung.statsoflegends.data.servers
 import ch.noseryoung.statsoflegends.net.APIManager
-import ch.noseryoung.statsoflegends.persistence.RecentSummonerData
-import ch.noseryoung.statsoflegends.persistence.RecentSummonerDb
 import kotlinx.android.synthetic.main.activity_search.*
 import android.widget.AdapterView
 import ch.noseryoung.statsoflegends.net.HTTPManager
+import ch.noseryoung.statsoflegends.persistence.DbManager
 
 
 class SearchActivity : AppCompatActivity() {
-
-    // lateinit variables for database connection and ThreadHandling
-    lateinit var dbInstance: RecentSummonerDb
-    lateinit var dbWorkerThread: HandlerThread
-    lateinit var dbThreadHandler: Handler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,11 +26,7 @@ class SearchActivity : AppCompatActivity() {
             servers.keys.toList()
         )
 
-        // Initialize database instance and start dbWorker thread
-        dbInstance = RecentSummonerDb.getInstance(this)!!
-        dbWorkerThread = HandlerThread("dbWorker")
-        dbWorkerThread.start()
-        dbThreadHandler = Handler(dbWorkerThread.looper)
+        DbManager.initialize(this)
 
         spinnerArrayAdapter.setDropDownViewResource(
             android.R.layout
@@ -68,32 +56,6 @@ class SearchActivity : AppCompatActivity() {
         setAsyncListViewAdapter()
     }
 
-    /**
-     *  This function is called after a search request was successfully fired and persists the summoner to the db
-     *
-     *  Sends the recentSummoner as object in a Runnable to the ThreadHandler which then persists it
-     */
-    private fun persistRecentSummoner(summonerName: String, region: String) {
-        val summonerToPersist = RecentSummonerData(summonerName = summonerName, region = region)
-
-        // runnable to post to ThreadHandler
-        val task = Runnable {
-            // Deletes the summoner if he does already exist
-            dbInstance.recentSummonerDao().deleteBySummonerName(summonerName)
-
-            // Deletes the "oldest" summoner if there are more than three persisted summoners
-            val summonerCount = dbInstance.recentSummonerDao().getCount()
-            if (summonerCount >= 3) {
-                dbInstance.recentSummonerDao().deleteOldest()
-            }
-            // Persists the summoner
-            dbInstance.recentSummonerDao().insert(summonerToPersist)
-        }
-
-        // posts the Task to the ThreadHandler
-        dbThreadHandler.looper
-        dbThreadHandler.post(task)
-    }
 
     /*
      * Loads the listview adapter for the recent search
@@ -103,7 +65,7 @@ class SearchActivity : AppCompatActivity() {
     private fun setAsyncListViewAdapter() {
         // runnable to post to ThreadHandler
         val task = Runnable {
-            val summoners = dbInstance.recentSummonerDao().getAll()
+            val summoners = DbManager.getAll()
 
             // parses the summoner names out of the RecentSummoner objects
             val nameList = ArrayList<String>()
@@ -130,9 +92,7 @@ class SearchActivity : AppCompatActivity() {
                 }
         }
 
-        // posts the task to the ThreadHandler after chekcking if the looper is initialized
-        dbThreadHandler.looper
-        dbThreadHandler.post(task)
+        DbManager.postTask(task)
     }
 
     private fun startNavigation(type: NavigationType) {
@@ -159,7 +119,7 @@ class SearchActivity : AppCompatActivity() {
                 return
             }
 
-            persistRecentSummoner(summonerName, "euw1")
+            DbManager.persistRecentSummoner(summonerName, "euw1")
         }
 
         val intent = Intent(this, NavigationActivity::class.java)

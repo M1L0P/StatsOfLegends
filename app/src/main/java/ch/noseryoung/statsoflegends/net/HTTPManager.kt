@@ -9,7 +9,7 @@ import com.squareup.okhttp.OkHttpClient
 import com.squareup.okhttp.Response
 import java.io.IOException
 
-class HTTPManager {
+open class HTTPManager {
 
     // OkHTTP client to use during requests
     var client = OkHttpClient()

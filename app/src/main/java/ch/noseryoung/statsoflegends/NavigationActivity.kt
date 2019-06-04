@@ -51,7 +51,7 @@ class NavigationActivity : AppCompatActivity() {
         }
 
         // Set selected intend
-        when (intent.extras.getInt("type")) {
+        when (intent?.extras?.getInt("type")) {
             NavigationType.HISTORY.value -> {
                 loadMatchHistory()
                 nav_view.menu.get(1).isChecked = true

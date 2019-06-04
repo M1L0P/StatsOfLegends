@@ -6,11 +6,13 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import ch.noseryoung.statsoflegends.net.HTTPManager
+import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
+import org.mockito.Mockito.mock
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -44,6 +46,8 @@ class NavigationActivityTest {
 
         val appContext = InstrumentationRegistry.getInstrumentation().context
 
+        httpManager = mock(HTTPManager::class.java)
+
         `when`(httpManager.get(url)).thenReturn(playerResponse)
 
         // Enter summoner name and click button
@@ -53,7 +57,7 @@ class NavigationActivityTest {
             .perform(ViewActions.click())
 
         // Check if bar is correct
-        assert(mActivityRule.activity.title == "SirTubelUJohnson")
+        assertEquals(mActivityRule.activity.title, "SirTubelUJohnson")
     }
 }
 
