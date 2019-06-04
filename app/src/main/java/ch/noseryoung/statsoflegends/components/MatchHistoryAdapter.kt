@@ -14,6 +14,7 @@ import ch.noseryoung.statsoflegends.persistence.StaticManager
 import kotlin.math.roundToInt
 import android.graphics.drawable.BitmapDrawable
 import androidx.core.content.ContextCompat
+import ch.noseryoung.statsoflegends.persistence.ImageType
 
 
 class MatchHistoryAdapter(private val context: Context, private var data: MatchHistory) :
@@ -39,18 +40,18 @@ class MatchHistoryAdapter(private val context: Context, private var data: MatchH
         holder.txtChampionName.text = match.championName
 
         // Images
-        holder.imgChamp.setImageBitmap(StaticManager.getChampionIcon(context, match.championName))
-        holder.imgItem1.setImageBitmap(StaticManager.getItemIcon(context, match.itemID[0]))
-        holder.imgItem2.setImageBitmap(StaticManager.getItemIcon(context, match.itemID[1]))
-        holder.imgItem3.setImageBitmap(StaticManager.getItemIcon(context, match.itemID[2]))
-        holder.imgItem4.setImageBitmap(StaticManager.getItemIcon(context, match.itemID[3]))
-        holder.imgItem5.setImageBitmap(StaticManager.getItemIcon(context, match.itemID[4]))
-        holder.imgItem6.setImageBitmap(StaticManager.getItemIcon(context, match.itemID[5]))
+        holder.imgChamp.setImageBitmap(StaticManager.get(match.championName, ImageType.CHAMPION, context))
+        holder.imgItem1.setImageBitmap(StaticManager.get(match.itemID[0], ImageType.ITEM, context))
+        holder.imgItem2.setImageBitmap(StaticManager.get(match.itemID[1], ImageType.ITEM, context))
+        holder.imgItem3.setImageBitmap(StaticManager.get(match.itemID[2], ImageType.ITEM, context))
+        holder.imgItem4.setImageBitmap(StaticManager.get(match.itemID[3], ImageType.ITEM, context))
+        holder.imgItem5.setImageBitmap(StaticManager.get(match.itemID[4], ImageType.ITEM, context))
+        holder.imgItem6.setImageBitmap(StaticManager.get(match.itemID[5], ImageType.ITEM, context))
 
-        holder.imgSum1.setImageBitmap(StaticManager.getSpellIcon(context, match.summonerSpellIDs.first))
-        holder.imgSum2.setImageBitmap(StaticManager.getSpellIcon(context, match.summonerSpellIDs.second))
+        holder.imgSum1.setImageBitmap(StaticManager.get(match.summonerSpellIDs.first, ImageType.SPELL, context))
+        holder.imgSum2.setImageBitmap(StaticManager.get(match.summonerSpellIDs.second, ImageType.SPELL, context))
 
-        holder.background.setImageBitmap(StaticManager.getChampionSplash(context, match.championName))
+        holder.background.setImageBitmap(StaticManager.get(match.championName, ImageType.SPLASH, context))
 
         if(match.won) {
             holder.winLose.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.win_triangle))

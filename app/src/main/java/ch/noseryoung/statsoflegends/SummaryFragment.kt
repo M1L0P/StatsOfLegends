@@ -17,6 +17,7 @@ import ch.noseryoung.statsoflegends.persistence.StaticManager
 import android.widget.ProgressBar
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import ch.noseryoung.statsoflegends.persistence.ImageType
 
 
 class SummaryFragment : Fragment() {
@@ -41,13 +42,13 @@ class SummaryFragment : Fragment() {
             "Level ${DataHolder.summoner.level}"
 
         // Summoner icon
-        root.findViewById<ImageView>(R.id.imgSumIcon).setImageBitmap(StaticManager.getProfileIcon(context!!, DataHolder.summoner.icon))
+        root.findViewById<ImageView>(R.id.imgSumIcon).setImageBitmap(StaticManager.get(DataHolder.summoner.icon, ImageType.ICON, context!!))
 
         // Champion images
         root.findViewById<ImageView>(R.id.imgSumC1).setImageBitmap(
-            StaticManager.getChampionIcon(context!!, DataHolder.getPrimaryChampion()))
+            StaticManager.get(DataHolder.getPrimaryChampion(), ImageType.CHAMPION, context!!))
         root.findViewById<ImageView>(R.id.imgSumC2).setImageBitmap(
-            StaticManager.getChampionIcon(context!!, DataHolder.getSecondaryChampion()))
+            StaticManager.get(DataHolder.getSecondaryChampion(), ImageType.CHAMPION, context!!))
 
         // Win rate
         root.findViewById<ProgressBar>(R.id.progWon).progress = DataHolder.getWinRate()
